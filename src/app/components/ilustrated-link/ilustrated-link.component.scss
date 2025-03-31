@@ -1,0 +1,26 @@
+.article-link {
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
+.article-link img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: fill;
+  border-radius: 50%;
+  margin-bottom: 0.25rem;
+  background-color: #716d6d;
+}
+.article-link-text {
+  max-width: 8rem;
+  line-height: 1.2;
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+}
+.article-link-component {
+  width: 9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
