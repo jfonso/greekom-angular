@@ -1,0 +1,170 @@
+#article-title {
+    font-size: 3rem;
+}
+#article section:not(.infobox-section) {
+    margin-bottom: 1.8rem;
+}
+#article h3 {
+    font-size: 2rem;
+}
+#introduction, #mythic-history {
+    font-size: 0.8rem;
+    text-align: justify;
+}
+#article {
+    line-height: 1.5;
+}
+#article aside {
+    float: right;
+    padding-left: 0.5rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+#article p, #article h3, #article-title {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+#gallery ul {
+    line-height: 0;
+    background-color: #D9D9D9;
+    padding: 0.8rem;
+    display: flex;
+    column-gap: 0.6rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+#gallery img {
+    width: 12rem;
+    height: 8rem;
+    object-fit: fill;
+}
+#article-options {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    margin-bottom: 1rem;
+}
+#fav-article {
+    line-height: 1;
+    background-color: #d0b37b;
+    color: white;
+    font-family: "Inknut Antiqua", serif;
+    font-size: 1.5rem;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 5rem;
+    cursor: pointer;
+}
+#go-to-forum {
+    color: black;
+    background-color: #d9d9d9;
+    text-decoration: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 5rem;
+}
+#infobox {
+    background-color: #6B4C3A;
+    color: white;
+}
+.infobox-section .section-header {
+    background-color: #CAA996;
+    padding: 0.1rem;
+    font-size: 1rem;
+    color: #000000;
+}
+.infobox-section .section-content {
+    padding: 0.4rem;
+}
+.infobox-section {
+    font-size: 0.7rem;
+    text-align: center;
+}
+#article-image {
+    padding: 0.6rem;
+}
+#article-image img {
+    max-width: 30rem;
+    max-height: 23rem;
+    width: 100%;
+    object-fit: fill;
+}
+#article-image figcaption {
+    font-size: 0.6rem;
+}
+
+@media (max-device-width: 1200px) {
+    p {
+        font-size: 1rem;
+    }
+
+    #infobox {
+        margin-right: 3rem;
+    }
+
+    #go-to-forum {
+        margin-right: 3rem;
+    }
+
+    #introduction, #mythic-history {
+        font-size: 1rem;
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+
+    #article-title {
+        font-size: 4rem;
+        margin-left: 3rem;
+    }
+
+    #article h3 {
+        margin-left: 3rem;
+        font-size: 2.5rem;
+    }
+
+    #gallery ul {
+        margin-left: 3rem;
+    }
+
+    #article-image img {
+        max-width: 25rem;
+    }
+    #article-options {
+        margin-top: 5rem;
+    }
+}
+
+@media (max-device-width: 500px) {
+    p {
+        font-size: 0.75rem;
+    }
+    h3 {
+        font-size: 2rem;
+    }
+
+    #article-title {
+        margin: 3rem 3rem;
+        font-size: 4rem;
+        max-width: 70vw;
+    }
+
+    #introduction, mythic-history {
+        font-size: 0.75rem;
+    }
+
+    #article-image img {
+        max-width: 30rem;
+    }
+    #article-image figcaption {
+        font-size: 1rem;
+    }
+    .infobox-section {
+        font-size: 1rem;
+    }
+    .infobox-header {
+        font-size: 1.5rem;
+    }
+    #article-options {
+        margin-top: 5rem;
+    }
+}
+

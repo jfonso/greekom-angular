@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description">
+    <meta name="keywords">
+    <title>GreeKom</title>
+    <script src="js/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <header xlu-include-file="templates/header.html"></header>
+    <nav xlu-include-file="templates/navbar.html"></nav>
+
+    <section id="main">
+        <h2 id="main-title">Main Information</h2>
+
+        <section id="main-characters" class="index-section">
+            <h3 class="index-section-title">Main characters</h3>
+            <hr>
+            <ul xlu-include-file="templates/illustrated-link.html" data-json="data/index/characters-list.json" class="illustrated-article-list"></ul>
+        </section>
+
+        <section id="main-locations" class="index-section">
+            <h3 class="index-section-title">Main locations</h3>
+            <hr>
+            <ul xlu-include-file="templates/illustrated-link.html" data-json="data/index/locations-list.json" class="illustrated-article-list"></ul>
+        </section>
+
+        <section id="main-info-section" class="index-section">
+            <h3 class="index-section-title">Main Myths</h3>
+            <hr>
+            <ul xlu-include-file="templates/illustrated-link.html" data-json="data/index/myths-list.json" class="illustrated-article-list"></ul>
+        </section>
+    </section>
+
+
+    <footer xlu-include-file="templates/footer.html"></footer>
+
+    <script>
+        xLuIncludeFile();
+    </script>
+</body>
+</html>

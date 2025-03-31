@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description">
+    <meta name="keywords">
+    <title>Log In - GreeKom</title>
+    <script src="js/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/authentication.css">
+</head>
+
+<body>
+    <header xlu-include-file="templates/header.html"></header>
+    <nav xlu-include-file="templates/navbar.html"></nav>
+
+
+    <h2 id="main-title">Log in</h2>
+    <section id="main-login">
+        <form id="login-form" action="/users" method="get">
+            <div class="toast success">
+                <span>Successfully logged in. Redirecting...</span>
+            </div>
+            <div class="toast error">
+                <span>User not found.</span>
+            </div>
+            <div id="inputs">
+                <label class="input-label">Username</label>
+                <input type="text" name="username" placeholder="Username" required minlength="6" maxlength="26">
+                <label class="input-label">Password</label>
+                <input type="password" name="password" placeholder="Password" required minlength="6" maxlength="18">
+            </div>
+            <div id="button">
+                <button type="submit">Confirm</button>
+            </div>
+        </form>
+    </section>
+
+
+    <footer xlu-include-file="templates/footer.html"></footer>
+
+    <script>
+        document.querySelector('#login-form').addEventListener('success',function(e){
+            e.data.json().then(data => {
+                if (data.length === 0) {
+                    let toast = this.querySelector('.toast.error');
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    },3000);
+                    return;
+                }
+                setCookie('user',JSON.stringify(data[0]),365);
+                let toast = this.querySelector('.toast.success');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    window.location.href = '/';
+                },3000);
+            });
+        });
+        xLuIncludeFile();
+    </script>
+</body>
+</html>

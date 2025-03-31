@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description">
+    <meta name="keywords">
+    <title>Thread - GreeKom</title>
+    <script src="js/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/forum.css">
+</head>
+
+<body>
+    <header xlu-include-file="templates/header.html"></header>
+    <nav xlu-include-file="templates/navbar.html"></nav>
+    <section id="main" class="thread" auth:xlu-include-file="templates/thread.html" data-json="//{{hostname}}:3000/threads?id=">
+    </section>
+    <footer xlu-include-file="templates/footer.html"></footer>
+
+    <script>
+        requiresAuthentication();
+        document.getElementById('main').dataset['json'] += (new URLSearchParams(window.location.search)).get('id');
+        document.addEventListener('templates-loaded',function(e){
+            if(window.location.hash) document.querySelector(window.location.hash)?.scrollIntoView();
+            document.querySelector('#reply-modal form').addEventListener('success',function(e){
+                let form = this;
+                e.data.json().then(data => {
+                    if (data.length === 0) {
+                        let toast = this.querySelector('.toast.error');
+                        toast.classList.add('show');
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        },3000);
+                        return;
+                    }
+                    let createdPostId= data.id;
+                    let url = new  URL(window.location.toString());
+                    url.pathname = '/threads/'+data.thread_id;
+                    url.port = 3000;
+                    let config = {
+                        method: 'PATCH',
+                        body: JSON.stringify({
+                            updated: (new Date()).toISOString().split('T')[0]
+                        })
+                    };
+                    fetch(url.toString(),config).then(function(data){
+                        let toast = form.querySelector('.toast.success');
+                        toast.classList.add('show');
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                            let url = new URL(window.location.toString());
+                            url.hash = `post-${createdPostId}`;
+                            window.location.replace(url.toString());
+                            window.location.reload();
+                        },3000);
+                    });
+                });
+            });
+        });
+        xLuIncludeFile();
+    </script>
+</body>
+</html>

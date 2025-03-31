@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description">
+    <meta name="keywords">
+    <title>Sign Up - GreeKom</title>
+    <script src="js/app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/authentication.css">
+</head>
+
+<body>
+    <header xlu-include-file="templates/header.html"></header>
+    <nav xlu-include-file="templates/navbar.html"></nav>
+    <h2 id="main-title">Sign up</h2>
+    <section id="main-login">
+        <form id="signup-form" action="/users" method="post">
+            <div class="toast success">
+                <span>User created successfully.</span>
+            </div>
+            <div id="inputs">
+                <label class="input-label">Username</label>
+                <input type="text" name="username" placeholder="Username" minlength="6" maxlength="26" data-validationregex="^[a-zA-Z][a-zA-Z0-9_]+$" data-validationhint="Username must start with a letter and can only contain letters numbers and underscores." unique required>
+                <label class="input-label">Email</label>
+                <input type="email" name="email" placeholder="Email" maxlength="64" unique required>
+                <label class="input-label">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" minlength="6" maxlength="18" required>
+                <label class="input-label">Confirm Password</label>
+                <input type="password" data-confirmtarget="#password" placeholder="Confirm Password" minlength="6" maxlength="18" required>
+            </div>
+            <div id="button"><button type="submit">Confirm</button></div>
+        </form>
+    </section>
+    <footer xlu-include-file="templates/footer.html"></footer>
+
+    <script>
+        document.querySelector('#signup-form').addEventListener('success',function(e){
+            let toast = this.querySelector('.toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                window.location.href = '/login.html';
+            },3000);
+        });
+        xLuIncludeFile();
+    </script>
+</body>
+</html>
