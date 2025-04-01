@@ -1,8 +1,8 @@
 <li class="article-link-component">
-  <a class="article-link" routerLink="/article">
+  <a class="article-link" routerLink="{{link()}}">
     <figure>
-      <img src="" alt="">
-      <figcaption class="article-link-text">Lorem</figcaption>
+      <img src="{{imageUrl()}}" alt="">
+      <figcaption class="article-link-text">{{text()}}</figcaption>
     </figure>
   </a>
 </li>

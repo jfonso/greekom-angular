@@ -1,0 +1,20 @@
+#catalog {
+    background-color: #83695A;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#catalog ul {
+    display: flex;
+}
+
+#authentication {
+    position: absolute;
+    right: 0;
+}
+
+#catalog ul#authentication li a {
+    color: #F5F4BC;
+}

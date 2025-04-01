@@ -1,0 +1,8 @@
+<li>
+    <a class="dropdown-toggle" href="#">{{text()}}</a>
+    <ul class="dropdown-menu" id="{{id()}}">
+        @for(link in links; track link.text) {
+            <app-navbar-link [url]="link.url" [text]="link.text"></app-navbar-link>
+        }
+    </ul>
+</li>

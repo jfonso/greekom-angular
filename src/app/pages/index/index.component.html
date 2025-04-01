@@ -5,7 +5,9 @@
     <h3 class="index-section-title">Main characters</h3>
     <hr>
     <div class="ilustrated-links-section">
-      <app-ilustrated-link></app-ilustrated-link>
+      @for(article of mainCharacters; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
     </div>
   </section>
 
@@ -13,7 +15,9 @@
     <h3 class="index-section-title">Main locations</h3>
     <hr>
     <div class="ilustrated-links-section">
-      <app-ilustrated-link></app-ilustrated-link>
+      @for(article of mainLocations; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
     </div>
   </section>
 
@@ -21,7 +25,9 @@
     <h3 class="index-section-title">Main Myths</h3>
     <hr>
     <div class="ilustrated-links-section">
-      <app-ilustrated-link></app-ilustrated-link>
+      @for(article of mainMyths; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
     </div>
   </section>
 </main>
