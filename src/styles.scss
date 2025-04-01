@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+}
+body {
+  background-color: #F4E9DB;
+  margin: 0;
+}
+
+main {
+  max-width: 90%;
+  margin: 1rem auto;
+}
+
+#main-title {
+  font-size: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.7em 0;
+}

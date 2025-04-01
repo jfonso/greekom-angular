@@ -1,0 +1,21 @@
+button {
+  background-color: #6E401B;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  border: 2px solid #000000;
+  border-radius: 0.8rem;
+  height: 3rem;
+  width: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 2rem;
+  margin: 2rem 0 0 0;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-color: #6B4C3A;
+  color: #000000;
+}

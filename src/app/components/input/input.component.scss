@@ -1,0 +1,31 @@
+.input-label {
+  color: #FFFFFF;
+  display: block;
+  font-size: 2rem;
+}
+
+#inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input {
+  width: 90%;
+  height: 70%;
+  border-radius: 1rem;
+  border: 2px solid #000000;
+  border-bottom: 0.4rem solid #000000;
+}
+
+#input-section {
+  background-color: #716d6d;
+  width: 17.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
