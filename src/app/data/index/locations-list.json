@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Olympus",
+        "id": "olympus",
+        "image_url": "img/locations/olympus/greek-locations-olympus.avif"
+    },
+    {
+        "name": "Hades",
+        "id": "hades",
+        "image_url": "img/locations/hades/greek-locations-hades.avif"
+    },
+    {
+        "name": "Elysium",
+        "id": "elysium",
+        "image_url": "img/locations/elysium/greek-locations-elysium.avif"
+    },
+    {
+        "name": "Tartarus",
+        "id": "tartarus",
+        "image_url": "img/locations/tartarus/greek-locations-tartarus.avif"
+    }
+]
