@@ -1,0 +1,30 @@
+<main>
+  <h2 id="main-title">Sign up</h2>
+  <section id="main-signup">
+    <form id="signup-form" action="/users" method="post">
+      <div id="inputs">
+        <app-input
+          label="Username"
+          name="username"
+          placeholder="Username"
+          type="text"></app-input>
+        <app-input
+          label="Email"
+          name="email"
+          placeholder="email"
+          type="email"></app-input>
+        <app-input
+          label="Password"
+          name="password"
+          placeholder="Password"
+          type="password"></app-input>
+        <app-input
+          label="Confirm Password"
+          placeholder="Confirm password"
+          type="password"></app-input>
+      </div>
+      <app-button
+        label="Confirm"></app-button>
+    </form>
+  </section>
+</main>
