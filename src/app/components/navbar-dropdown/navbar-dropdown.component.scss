@@ -1,0 +1,30 @@
+li {
+    font-size: 1.5rem;
+    margin: 0 15px;
+}
+
+li a {
+    color: #F5D4A1;
+    text-decoration: none;
+}
+
+ul.dropdown-menu {
+    display: none;
+    position: absolute;
+}
+
+ul.dropdown-menu.show {
+    display: block;
+    background-color: #83695A;
+    line-height: 1.2;
+    z-index: 1;
+}
+
+ul.dropdown-menu.show li {
+    margin: 0;
+    padding: 0.5rem;
+}
+
+ul.dropdown-menu.show li:hover {
+    background-color: #3B2A2A;
+}
