@@ -18,3 +18,25 @@
 #catalog ul#authentication li a {
     color: #F5F4BC;
 }
+
+#catalog ul.dropdown-menu.show {
+  display: block;
+  background-color: #83695A;
+  line-height: 1.2;
+  z-index: 1;
+}
+#catalog ul.dropdown-menu.show li {
+  margin: 0;
+  padding: 0.5rem;
+}
+#catalog ul.dropdown-menu.show > li:hover {
+  background-color: #3B2A2A;
+  padding: 8px 8px 8px 24px;
+}
+
+.dropdown-toggle {
+  font-size: 2rem;
+  margin: 2rem;
+  color: #F5D4A1;
+  text-decoration: none;
+}

@@ -1,0 +1,35 @@
+<main>
+  <div>
+    <h2 id="main-title">Thread</h2>
+    <div id="thread-controls">
+      <div>
+        <app-button label="Reply"/>
+      </div>
+      <div id="fav-thread">
+        <button type="button">&star;</button>
+      </div>
+    </div>
+
+  </div>
+  <section id="opening-post" xlu-include-file="templates/post.html" data-user="" data-content="">
+  </section>
+  <hr>
+  <section id="thread-responses" xlu-include-file="templates/post.html" data-json='//:3000/posts?thread_id=&_sort=created'></section>
+  <div id="reply-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-header">New Post</div>
+      <form action="/posts" method="POST">
+        <input type="hidden" name="thread_id" value="">
+        <input type="hidden" name="created" class="fill-with-timestamp">
+        <input type="hidden" name="user" value="">
+        <div class="form-group">
+          <textarea name="content" rows="10" minlength="5" maxlength="1000" required></textarea>
+        </div>
+        <div class="form-group">
+          <app-button label="Post"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

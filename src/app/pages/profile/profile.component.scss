@@ -1,0 +1,86 @@
+#main-profile {
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  align-items: flex-start;
+  max-width: 95%;
+}
+
+#menu-option-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40rem;
+  max-height: 80rem;
+  margin: 1rem 1rem;
+  background-color: #3b2a2a;
+  border-radius: 0.8rem;
+}
+
+#input-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25rem;
+  height: 4rem;
+  margin: 0 0 1rem 0rem;
+  border-radius: 0.8rem;
+  background-color: #716d6d;
+}
+
+@media (max-device-width: 1200px) {
+  #menu-option-content {
+    height: 65vh;
+  }
+  .input-label {
+    font-size: 1.5rem;
+  }
+  #profile-menu {
+    font-size: 10rem;
+  }
+  #profile-option {
+    font-size: 1.8rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+  }
+  #profile-menu {
+    height: 60vh;
+  }
+}
+
+@media (max-device-width: 500px) {
+  #menu-option-content {
+    height: 40vh;
+  }
+  .input-label {
+    font-size: 2rem;
+  }
+  input {
+    width: 30rem;
+    height: 3rem;
+    font-size: 2rem;
+  }
+  #input-background {
+    height: 6.5rem;
+    width: 35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #profile-menu {
+    font-size: 10rem;
+  }
+  #profile-option {
+    font-size: 1.8rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+  }
+  #profile-menu {
+    height: 35vh;
+  }
+}
