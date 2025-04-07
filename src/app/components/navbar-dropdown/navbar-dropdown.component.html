@@ -1,8 +1,10 @@
 <li>
-    <a class="dropdown-toggle" href="#">{{text()}}</a>
+    <a class="dropdown-toggle" href="#{{id()}}" (click)="showDropdown($event)">{{text()}}</a>
     <ul class="dropdown-menu" id="{{id()}}">
-        @for(link in links; track link.text) {
-            <app-navbar-link [url]="link.url" [text]="link.text"></app-navbar-link>
-        }
+        @for(listItem of listItems(); track listItem.id) {
+            <li>
+                <a href="{{`/article/${listItem.id}`}}">{{listItem.name}}</a>
+            </li>
+        } @empty {}
     </ul>
 </li>

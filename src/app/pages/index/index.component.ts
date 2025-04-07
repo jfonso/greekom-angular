@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {IlustratedLinkComponent} from '../../components/ilustrated-link/ilustrated-link.component';
 import { ArticleService } from '../../services/article.service';
 import { ArticleListItem } from '../../interfaces/article-list-item';
@@ -17,7 +17,7 @@ export class IndexComponent {
   mainLocations?: ArticleListItem[];
   mainMyths?: ArticleListItem[];
 
-  constructor(private articleService: ArticleService) {}
+  articleService = inject(ArticleService);
   
   ngOnInit() {
     this.articleService.getMainCharacters().then((mainCharacters: ArticleListItem[]) => {
