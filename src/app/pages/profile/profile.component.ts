@@ -4,13 +4,15 @@ import {ProfileInformationComponent} from '../../components/profile-information/
 import {
   ProfileChangePasswordComponent
 } from '../../components/profile-change-password/profile-change-password.component';
+import {ProfileFavouriteItemComponent} from '../../components/profile-favourite-item/profile-favourite-item.component';
 
 @Component({
   selector: 'app-profile',
   imports: [
     ProfileMenuComponent,
     ProfileInformationComponent,
-    ProfileChangePasswordComponent
+    ProfileChangePasswordComponent,
+    ProfileFavouriteItemComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'

@@ -17,13 +17,16 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 20rem;
   max-width: 30rem;
-  max-height: 80rem;
+  min-height: 10rem;
   margin: 1rem 1rem;
   background-color: #3b2a2a;
   border-radius: 0.8rem;
   flex: 1;
   position: relative;
+  gap: 0.5rem;
+  padding: 2rem 0;
 }
 
 #input-background {
@@ -32,7 +35,7 @@ main {
   align-items: center;
   width: 25rem;
   height: 4rem;
-  margin: 0 0 1rem 0rem;
+  margin: 0 0 1rem 0;
   border-radius: 0.8rem;
   background-color: #716d6d;
 }
