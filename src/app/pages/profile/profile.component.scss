@@ -6,8 +6,10 @@
 
 main {
   display: flex;
+  justify-content: center;
   align-items: flex-start;
   max-width: 95%;
+  min-height: 100vh;
 }
 
 #menu-option-content {
@@ -15,11 +17,13 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40rem;
+  max-width: 30rem;
   max-height: 80rem;
   margin: 1rem 1rem;
   background-color: #3b2a2a;
   border-radius: 0.8rem;
+  flex: 1;
+  position: relative;
 }
 
 #input-background {
@@ -31,6 +35,11 @@ main {
   margin: 0 0 1rem 0rem;
   border-radius: 0.8rem;
   background-color: #716d6d;
+}
+
+app-profile-menu {
+  position: absolute;
+  left: 0;
 }
 
 @media (max-device-width: 1200px) {
