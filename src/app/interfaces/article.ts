@@ -1,3 +1,4 @@
+import { ArticleListItem } from "./article-list-item";
 
 export interface Article {
     title: string;
@@ -8,9 +9,9 @@ export interface Article {
     galleryImages: {
         url: string;
     }[];
-    relatedCharacters: Article[];
-    relatedMyths: Article[];
-    relatedLocations: Article[];
+    relatedCharacters: ArticleListItem[];
+    relatedMyths: ArticleListItem[];
+    relatedLocations: ArticleListItem[];
     info: {
         header: string;
         content: string;

@@ -1,9 +1,9 @@
 <li>
     <a class="dropdown-toggle" href="#{{id()}}" (click)="showDropdown($event)">{{text()}}</a>
     <ul class="dropdown-menu" id="{{id()}}">
-        @for(listItem of listItems(); track listItem.id) {
+        @for(link of links(); track link.url) {
             <li>
-                <a href="{{`/article/${listItem.id}`}}">{{listItem.name}}</a>
+                <a [routerLink]="link.url">{{link.text}}</a>
             </li>
         } @empty {}
     </ul>

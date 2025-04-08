@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-gallery-image',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './gallery-image.component.scss'
 })
 export class GalleryImageComponent {
-
+  url = input.required<string>();
 }

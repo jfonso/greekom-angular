@@ -6,6 +6,8 @@ import charactersList from '../data/navbar/characters-list.json';
 import locationsList from '../data/navbar/locations-list.json';
 import mythsList from '../data/navbar/myths-list.json';
 import { ArticleListItem } from '../interfaces/article-list-item';
+import { Article } from '../interfaces/article';
+import aphrodite from '../data/article/aphrodite.json';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +38,9 @@ export class ArticleService {
 
   async getMyths(): Promise<ArticleListItem[]> {
     return mythsList;
+  }
+
+  async getArticle(id: string): Promise<Article> {
+    return aphrodite[0];
   }
 }
