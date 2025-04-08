@@ -1,8 +1,8 @@
 <div id="catalog">
     <ul id="catalog-options">
-        <app-navbar-dropdown text="Gods and heroes" id="gods-and-heros" [listItems]="charactersList"></app-navbar-dropdown>
-        <app-navbar-dropdown text="Locations" id="locations" [listItems]="locationsList"></app-navbar-dropdown>
-        <app-navbar-dropdown text="Myths" id="myths" [listItems]="mythsList"></app-navbar-dropdown>
+        <app-navbar-dropdown text="Gods and heroes" id="gods-and-heros" [links]="charactersLinks"></app-navbar-dropdown>
+        <app-navbar-dropdown text="Locations" id="locations" [links]="locationsLinks"></app-navbar-dropdown>
+        <app-navbar-dropdown text="Myths" id="myths" [links]="mythsLinks"></app-navbar-dropdown>
         <app-navbar-link url="/forum" text="Forum"></app-navbar-link>
     </ul>
     <ul id="authentication">

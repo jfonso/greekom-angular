@@ -9,7 +9,7 @@ import {ProfileComponent} from './pages/profile/profile.component';
 
 export const routes: Routes = [
   {path: '', component: IndexComponent},
-  {path: 'article', component: ArticleComponent},
+  {path: 'article/:id', component: ArticleComponent},
   {path: 'log-in', component: LogInComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'forum', component: ForumComponent},

@@ -1,4 +1,4 @@
-<main>
+<main id="article">
   <aside>
     <div id="article-options">
       <button id="fav-article" type="button">&star; Favourite</button>
@@ -6,35 +6,55 @@
     </div>
     <div id="infobox">
       <figure id="article-image">
-        <img src="../greekom/img/characters/aphrodite/greek-gods-aphrodite-5.webp" alt="">
-        <figcaption>Image caption</figcaption>
+        <img src="{{article?.articleImage}}" alt="">
+        <figcaption>{{article?.articleImageCaption}}</figcaption>
       </figure>
-      <div id="infobox-sections">Infobox section</div>
+      <div id="infobox-sections">
+        @for(info of article?.info; track info.header) {
+          <app-infobox-section [header]="info.header" [content]="info.content"></app-infobox-section>
+        } @empty {}
+      </div>
     </div>
   </aside>
 
-  <h2 id="article-title">Aphrodite</h2>
-  <section id="introduction">Lorem ipsum</section>
+  <h2 id="article-title">{{article?.title}}</h2>
+  <section id="introduction" [innerHtml]="article?.introduction"></section>
   <h3>Mythic History</h3>
   <section id="mythic-history">
 
-    <div>
+    <div [innerHtml]="article?.mythicHistory">
     </div>
   </section>
   <section id="gallery">
     <h3>Gallery</h3>
-    <ul ></ul>
+    <ul>
+      @for(galleryImage of article?.galleryImages; track galleryImage.url) {
+        <app-gallery-image url="{{galleryImage.url}}"></app-gallery-image>
+      } @empty {}
+    </ul>
   </section>
   <section id="related-myths">
     <h3>Related Myths</h3>
-    <ul class="illustrated-article-list"></ul>
+    <ul class="illustrated-article-list">
+      @for(article of article?.relatedMyths; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
+    </ul>
   </section>
   <section id="related-characters">
     <h3>Related Characters</h3>
-    <ul class="illustrated-article-list"></ul>
+    <ul class="illustrated-article-list">
+      @for(article of article?.relatedCharacters; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
+    </ul>
   </section>
   <section id="related-locations">
     <h3>Related Locations</h3>
-    <ul class="illustrated-article-list"></ul>
+    <ul class="illustrated-article-list">
+      @for(article of article?.relatedLocations; track article.id) {
+        <app-ilustrated-link [item]="article"></app-ilustrated-link>
+      } @empty {}
+    </ul>
   </section>
 </main>

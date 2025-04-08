@@ -1,18 +1,21 @@
 import { Component, ElementRef, inject, input } from '@angular/core';
-import { ArticleListItem } from '../../interfaces/article-list-item';
 import { DOCUMENT } from '@angular/common';
 import { fromEvent } from 'rxjs';
+import { Link } from '../../interfaces/link';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-dropdown',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './navbar-dropdown.component.html',
   styleUrl: './navbar-dropdown.component.scss'
 })
 export class NavbarDropdownComponent {
   id = input.required<string>();
   text = input.required<string>();
-  listItems = input.required<ArticleListItem[]>();
+  links = input.required<Link[]>();
   document = inject(DOCUMENT);
   elementRef = inject(ElementRef);
 

@@ -1,0 +1,22 @@
+.infobox-section .section-header {
+    background-color: #CAA996;
+    padding: 0.1rem;
+    font-size: 1rem;
+    color: #000000;
+}
+.infobox-section .section-content {
+    padding: 0.4rem;
+}
+.infobox-section {
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+@media (max-device-width: 500px) {
+    .infobox-section {
+        font-size: 1rem;
+    }
+    .infobox-header {
+        font-size: 1.5rem;
+    }
+}
