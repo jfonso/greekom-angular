@@ -5,6 +5,7 @@ li {
 li a {
     color: #F5D4A1;
     text-decoration: none;
+    font-size: 2rem;
 }
 
 ul.dropdown-menu {
@@ -25,5 +26,6 @@ ul.dropdown-menu.show li {
 }
 
 ul.dropdown-menu.show li:hover {
-    background-color: #3B2A2A;
+  background-color: #3B2A2A;
+  padding: 4px 4px 4px 16px;
 }

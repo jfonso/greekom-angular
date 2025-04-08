@@ -1,0 +1,71 @@
+.forum, .thread {
+  background-color: #6B4C3A;
+  padding: 0 2rem 1rem;
+  position: relative;
+}
+
+.thread h2 {
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+}
+
+#thread-controls {
+  position: absolute;
+  right: 2rem;
+  top: 0.5rem;
+  display: flex;
+
+  button {
+    background-color: #dfdccf;
+    border-radius: 1rem;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+#fav-thread button {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+#thread-responses {
+  padding: 1rem;
+}
+
+.modal form .form-group {
+  margin-top: 1rem;
+}
+.modal form textarea {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+.modal form input[type="text"] {
+  width: 100%;
+  border-radius: 0.5rem;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+  border: 2px solid gray;
+}
+.modal form button {
+  background-color: #6E401B;
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 2rem;
+  cursor: pointer;
+}
+
+#main {
+  max-width: 110rem;
+  border-radius: 2rem;
+}

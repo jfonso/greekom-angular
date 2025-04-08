@@ -1,0 +1,12 @@
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#labels {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}

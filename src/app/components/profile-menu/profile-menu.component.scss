@@ -1,0 +1,29 @@
+#profile-menu {
+  background-color: #3b2a2a;
+  color: #FFFFFF;
+  width: 22rem;
+  max-height: 25rem;
+  margin: 1rem 1rem;
+  border-radius: 0.8rem;
+  align-content: center;
+}
+
+.profile-link {
+  background-color: #6B4C3A;
+  font-size: 20px;
+  height: 2.5rem;
+  width: 100%;
+  margin: 1rem 0;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-link:hover {
+  background-color: #d0b37b;
+  padding: 4px 4px 4px 16px;
+  color: #000000;
+  font-weight: bold;
+}
