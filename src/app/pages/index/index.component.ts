@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, Signal, inject } from '@angular/core';
 import {IlustratedLinkComponent} from '../../components/ilustrated-link/ilustrated-link.component';
 import { ArticleService } from '../../services/article.service';
 import { ArticleListItem } from '../../interfaces/article-list-item';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-index',
@@ -13,21 +14,15 @@ import { ArticleListItem } from '../../interfaces/article-list-item';
 })
 export class IndexComponent {
 
-  mainCharacters?: ArticleListItem[];
-  mainLocations?: ArticleListItem[];
-  mainMyths?: ArticleListItem[];
+  mainCharacters?: Signal<ArticleListItem[] | undefined>;
+  mainLocations?: Signal<ArticleListItem[] | undefined>;
+  mainMyths?: Signal<ArticleListItem[] | undefined>;
 
   articleService = inject(ArticleService);
   
   ngOnInit() {
-    this.articleService.getMainCharacters().then((mainCharacters: ArticleListItem[]) => {
-      this.mainCharacters = mainCharacters;
-    });
-    this.articleService.getMainLocations().then((mainLocations: ArticleListItem[]) => {
-      this.mainLocations = mainLocations;
-    });
-    this.articleService.getMainMyths().then((mainMyths: ArticleListItem[]) => {
-      this.mainMyths = mainMyths;
-    });
+    this.mainCharacters = toSignal(this.articleService.getMainCharacters());
+    this.mainLocations = toSignal(this.articleService.getMainLocations());
+    this.mainMyths = toSignal(this.articleService.getMainMyths());
   }
 }

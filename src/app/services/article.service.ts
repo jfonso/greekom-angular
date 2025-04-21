@@ -1,31 +1,35 @@
-import { Injectable } from '@angular/core';
-import mainCharactersList from '../data/index/characters-list.json';
-import mainLocationsList from '../data/index/locations-list.json';
-import mainMythsList from '../data/index/myths-list.json';
+import { Injectable, inject } from '@angular/core';
 import charactersList from '../data/navbar/characters-list.json';
 import locationsList from '../data/navbar/locations-list.json';
 import mythsList from '../data/navbar/myths-list.json';
 import { ArticleListItem } from '../interfaces/article-list-item';
 import { Article } from '../interfaces/article';
 import aphrodite from '../data/article/aphrodite.json';
+import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
 
+  private firestore = inject(Firestore);
+  private mainCharactersCollection = collection(this.firestore, '/index-character-list');
+  private mainLocationsCollection = collection(this.firestore, '/index-location-list');
+  private mainMythsCollection = collection(this.firestore, '/index-myths-list');
+
   constructor() { }
 
-  async getMainCharacters(): Promise<ArticleListItem[]> {
-    return mainCharactersList;
+  getMainCharacters(): Observable<ArticleListItem[]> {
+    return collectionData(this.mainCharactersCollection) as Observable<ArticleListItem[]>;
   }
 
-  async getMainLocations(): Promise<ArticleListItem[]> {
-    return mainLocationsList;
+  getMainLocations(): Observable<ArticleListItem[]> {
+    return collectionData(this.mainLocationsCollection) as Observable<ArticleListItem[]>;
   }
 
-  async getMainMyths(): Promise<ArticleListItem[]> {
-    return mainMythsList;
+  getMainMyths(): Observable<ArticleListItem[]> {
+    return collectionData(this.mainMythsCollection) as Observable<ArticleListItem[]>;
   }
 
   async getCharacters(): Promise<ArticleListItem[]> {
