@@ -37,6 +37,6 @@ export class ArticleService {
   getMyths = toSignal(collectionData(this.navbarMythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
   async getArticle(id: string) {
-    return (await getDoc(doc(this.firestore,'article',id))).data();
+    return (await getDoc(doc(this.firestore,'article',id))).data() as Article;
   }
 }
