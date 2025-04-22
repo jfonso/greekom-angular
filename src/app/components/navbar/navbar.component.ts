@@ -16,22 +16,14 @@ export class NavbarComponent {
 
   user = input<User|null>(null);
 
-  charactersLinks: Link[] = [];
-  locationsLinks: Link[] = [];
-  mythsLinks: Link[] = [];
-
   articleService = inject(ArticleService);
-  
-  ngOnInit() {
-    this.articleService.getCharacters().then((charactersList: ArticleListItem[]) => {
-      this.charactersLinks = charactersList.map(item => ({url:['/article',item.id],text:item.name}));
-    });
-    this.articleService.getLocations().then((locationsList: ArticleListItem[]) => {
-      this.locationsLinks = locationsList.map(item => ({url:['/article',item.id],text:item.name}));
-    });
-    this.articleService.getMyths().then((mythsList: ArticleListItem[]) => {
-      this.mythsLinks = mythsList.map(item => ({url:['/article',item.id],text:item.name}));
-    });
+
+  charactersLinks = this.articleService.getCharacters;
+  locationsLinks = this.articleService.getLocations;
+  mythsLinks = this.articleService.getMyths;
+
+  toLinks(items: ArticleListItem[]): Link[] {
+    return items.map(item => ({url:['/article',item.id],text:item.name}));
   }
 
 }
