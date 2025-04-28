@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { GalleryImageComponent } from '../../components/gallery-image/gallery-image.component';
 import { IlustratedLinkComponent } from '../../components/ilustrated-link/ilustrated-link.component';
 import { InfoboxSectionComponent } from '../../components/infobox-section/infobox-section.component';
+import { map, switchMap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-article',
@@ -19,9 +21,6 @@ import { InfoboxSectionComponent } from '../../components/infobox-section/infobo
 export class ArticleComponent {
   articleService = inject(ArticleService);
   route = inject(ActivatedRoute);
-  article?: Article;
-
-  ngOnInit() {
-    this.articleService.getArticle(this.route.snapshot.params['id']).then(article => this.article = article);
-  }
+  articleId$ = this.route.params.pipe(map(params => params['id']));
+  article = toSignal(this.articleId$.pipe(switchMap(id => this.articleService.getArticle(id))));
 }

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ArticleListItem } from '../interfaces/article-list-item';
 import { Article } from '../interfaces/article';
 import aphrodite from '../data/article/aphrodite.json';
-import { Firestore, addDoc, collection, collectionData, collectionSnapshots, doc, getDoc, query, setDoc, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, collectionSnapshots, doc, docData, getDoc, query, setDoc, where } from '@angular/fire/firestore';
 import { Observable, firstValueFrom } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DocumentData } from '@angular/fire/compat/firestore';
@@ -19,7 +19,6 @@ export class ArticleService {
   private navbarCharactersCollection = collection(this.firestore, '/navbar-character-list');
   private navbarLocationsCollection = collection(this.firestore, '/navbar-location-list');
   private navbarMythsCollection = collection(this.firestore, '/navbar-myth-list');
-  private articlesCollection = collection(this.firestore, '/article');
 
   constructor() {
   }
@@ -36,7 +35,8 @@ export class ArticleService {
 
   getMyths = toSignal(collectionData(this.navbarMythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
-  async getArticle(id: string) {
-    return (await getDoc(doc(this.firestore,'article',id))).data() as Article;
+  getArticle(id: string) {
+    let articleDoc = doc(this.firestore, '/article', id);
+    return docData(articleDoc) as Observable<Article>;
   }
 }
