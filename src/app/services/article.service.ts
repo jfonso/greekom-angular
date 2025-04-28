@@ -1,14 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import testList from '../data/index/myths-list.json';
-import charactersList from '../data/navbar/characters-list.json';
-import locationsList from '../data/navbar/locations-list.json';
-import mythsList from '../data/navbar/myths-list.json';
 import { ArticleListItem } from '../interfaces/article-list-item';
 import { Article } from '../interfaces/article';
 import aphrodite from '../data/article/aphrodite.json';
-import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, addDoc, collection, collectionData, collectionSnapshots, doc, docData, getDoc, query, setDoc, where } from '@angular/fire/firestore';
+import { Observable, firstValueFrom } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DocumentData } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +16,9 @@ export class ArticleService {
   private mainCharactersCollection = collection(this.firestore, '/index-character-list');
   private mainLocationsCollection = collection(this.firestore, '/index-location-list');
   private mainMythsCollection = collection(this.firestore, '/index-myth-list');
-  private charactersCollection = collection(this.firestore, '/navbar-character-list');
-  private locationsCollection = collection(this.firestore, '/navbar-location-list');
-  private mythsCollection = collection(this.firestore, '/navbar-myth-list');
+  private navbarCharactersCollection = collection(this.firestore, '/navbar-character-list');
+  private navbarLocationsCollection = collection(this.firestore, '/navbar-location-list');
+  private navbarMythsCollection = collection(this.firestore, '/navbar-myth-list');
 
   constructor() {
   }
@@ -32,13 +29,14 @@ export class ArticleService {
 
   getMainMyths = toSignal(collectionData(this.mainMythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
-  getCharacters = toSignal(collectionData(this.charactersCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
+  getCharacters = toSignal(collectionData(this.navbarCharactersCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
-  getLocations = toSignal(collectionData(this.locationsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
+  getLocations = toSignal(collectionData(this.navbarLocationsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
-  getMyths = toSignal(collectionData(this.mythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
+  getMyths = toSignal(collectionData(this.navbarMythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
-  async getArticle(id: string): Promise<Article> {
-    return aphrodite[0];
+  getArticle(id: string) {
+    let articleDoc = doc(this.firestore, '/article', id);
+    return docData(articleDoc) as Observable<Article>;
   }
 }

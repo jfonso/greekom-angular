@@ -6,29 +6,29 @@
     </div>
     <div id="infobox">
       <figure id="article-image">
-        <img src="{{article?.articleImage}}" alt="">
-        <figcaption>{{article?.articleImageCaption}}</figcaption>
+        <img src="{{article()?.articleImage}}" alt="">
+        <figcaption>{{article()?.articleImageCaption}}</figcaption>
       </figure>
       <div id="infobox-sections">
-        @for(info of article?.info; track info.header) {
+        @for(info of article()?.info; track info.header) {
           <app-infobox-section [header]="info.header" [content]="info.content"></app-infobox-section>
         } @empty {}
       </div>
     </div>
   </aside>
 
-  <h2 id="article-title">{{article?.title}}</h2>
-  <section id="introduction" [innerHtml]="article?.introduction"></section>
+  <h2 id="article-title">{{article()?.title}}</h2>
+  <section id="introduction" [innerHtml]="article()?.introduction"></section>
   <h3>Mythic History</h3>
   <section id="mythic-history">
 
-    <div [innerHtml]="article?.mythicHistory">
+    <div [innerHtml]="article()?.mythicHistory">
     </div>
   </section>
   <section id="gallery">
     <h3>Gallery</h3>
     <ul>
-      @for(galleryImage of article?.galleryImages; track galleryImage.url) {
+      @for(galleryImage of article()?.galleryImages; track galleryImage.url) {
         <app-gallery-image url="{{galleryImage.url}}"></app-gallery-image>
       } @empty {}
     </ul>
@@ -36,7 +36,7 @@
   <section id="related-myths">
     <h3>Related Myths</h3>
     <ul class="illustrated-article-list">
-      @for(article of article?.relatedMyths; track article.id) {
+      @for(article of article()?.relatedMyths; track article.id) {
         <app-ilustrated-link [item]="article"></app-ilustrated-link>
       } @empty {}
     </ul>
@@ -44,7 +44,7 @@
   <section id="related-characters">
     <h3>Related Characters</h3>
     <ul class="illustrated-article-list">
-      @for(article of article?.relatedCharacters; track article.id) {
+      @for(article of article()?.relatedCharacters; track article.id) {
         <app-ilustrated-link [item]="article"></app-ilustrated-link>
       } @empty {}
     </ul>
@@ -52,7 +52,7 @@
   <section id="related-locations">
     <h3>Related Locations</h3>
     <ul class="illustrated-article-list">
-      @for(article of article?.relatedLocations; track article.id) {
+      @for(article of article()?.relatedLocations; track article.id) {
         <app-ilustrated-link [item]="article"></app-ilustrated-link>
       } @empty {}
     </ul>
