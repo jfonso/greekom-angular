@@ -12,3 +12,15 @@
     font-size: 5rem;
   }
 }
+
+@media (max-width: 768px) {
+  #title  {
+    height: 5.5rem;
+
+    a {
+      color: #C2977E;
+      text-decoration: none;
+      font-size: 3.5rem;
+    }
+  }
+}

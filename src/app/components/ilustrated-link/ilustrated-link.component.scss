@@ -3,6 +3,13 @@
   color: inherit;
   text-decoration: none;
 }
+
+.article-link:hover {
+  color: #a11000;
+  transition: 0.4s;
+  transform: scale(1.2, 1.2);
+}
+
 .article-link img {
   width: 8rem;
   height: 8rem;
@@ -24,4 +31,41 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .article-link img {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .article-link-text {
+    max-width: 7rem;
+    line-height: 1.2;
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-device-width: 425px) {
+  .article-link img {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+
+  .article-link-text {
+    max-width: 7.5rem;
+    line-height: 1.2;
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+  }
+
+  .article-link-component {
+    width: 7.5rem;
+    max-width: 9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
