@@ -1,17 +1,19 @@
 <main>
   <h2 id="main-title">Log in</h2>
   <section id="main-login">
-    <form id="login-form" action="/users" method="get">
+    <form id="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div id="inputs">
         <app-input
-          label="Username"
-          name="username"
-          placeholder="Username"
+          label="Email"
+          name="email"
+          placeholder="Email"
+          formControlName="email"
           type="text"></app-input>
         <app-input
           label="Password"
           name="password"
           placeholder="Ingresa tu contraseña"
+          formControlName="password"
           type="password"></app-input>
       </div>
     <app-button

@@ -1,25 +1,30 @@
 <main>
   <h2 id="main-title">Sign up</h2>
   <section id="main-signup">
-    <form id="signup-form" action="/users" method="post">
+    <form id="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div id="inputs">
         <app-input
           label="Username"
           name="username"
+          formControlName="username"
           placeholder="Username"
           type="text"></app-input>
         <app-input
           label="Email"
           name="email"
+          formControlName="email"
           placeholder="email"
           type="email"></app-input>
         <app-input
           label="Password"
           name="password"
+          formControlName="password"
           placeholder="Password"
           type="password"></app-input>
         <app-input
           label="Confirm Password"
+          name="confirmPassword"
+          formControlName="confirmPassword"
           placeholder="Confirm password"
           type="password"></app-input>
       </div>
