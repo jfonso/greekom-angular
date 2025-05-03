@@ -1,6 +1,6 @@
 #title  {
   background-color: #3B2A2A;
-  height: 12.5rem;
+  height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,6 +9,18 @@
   a {
     color: #C2977E;
     text-decoration: none;
-    font-size: 8rem;
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #title  {
+    height: 5.5rem;
+
+    a {
+      color: #C2977E;
+      text-decoration: none;
+      font-size: 3.5rem;
+    }
   }
 }
