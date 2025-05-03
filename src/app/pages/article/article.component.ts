@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
-import { Article } from '../../interfaces/article';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryImageComponent } from '../../components/gallery-image/gallery-image.component';
 import { IlustratedLinkComponent } from '../../components/ilustrated-link/ilustrated-link.component';
@@ -13,7 +12,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [
     GalleryImageComponent,
     IlustratedLinkComponent,
-    InfoboxSectionComponent
+    InfoboxSectionComponent,
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'

@@ -2,6 +2,7 @@
     background-color: #CAA996;
     padding: 0.1rem;
     font-size: 1rem;
+    font-weight: bold;
     color: #000000;
 }
 .infobox-section .section-content {
@@ -12,11 +13,22 @@
     text-align: center;
 }
 
-@media (max-device-width: 500px) {
+@media (max-device-width: 768px) {
     .infobox-section {
-        font-size: 1rem;
+        font-size: 0.8rem;
+        font-weight: normal;
     }
     .infobox-header {
         font-size: 1.5rem;
     }
+}
+
+@media (max-device-width: 425px) {
+  .infobox-section, .infobox-header {
+    width: 9rem;
+  }
+
+  .section-content {
+    background-color: #856D5E;
+  }
 }

@@ -1,9 +1,15 @@
 <main id="article">
+  <div id="title-and-options">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="20" fill="#6B4C3A"/>
+      <path d="M22.8926 15.5195L23.0049 15.8643H32.7275L25.1553 21.3662L24.8613 21.5791L24.9736 21.9248L27.8643 30.8252L20.2939 25.3252L20 25.1113L19.7061 25.3252L12.1348 30.8252L15.0264 21.9248L15.1387 21.5791L14.8447 21.3662L7.27246 15.8643H16.9951L17.1074 15.5195L20 6.61719L22.8926 15.5195Z" fill="white" stroke="#FFCD42"/>
+    </svg>
+    <h2 id="article-title">{{article()?.title}}</h2>
+    <a id="go-to-forum" href="forum.html">Forums</a>
+  </div>
+
+
   <aside>
-    <div id="article-options">
-      <button id="fav-article" type="button">&star; Favourite</button>
-      <a id="go-to-forum" href="forum.html">Go to Forums</a>
-    </div>
     <div id="infobox">
       <figure id="article-image">
         <img src="{{article()?.articleImage}}" alt="">
@@ -17,7 +23,7 @@
     </div>
   </aside>
 
-  <h2 id="article-title">{{article()?.title}}</h2>
+
   <section id="introduction" [innerHtml]="article()?.introduction"></section>
   <h3>Mythic History</h3>
   <section id="mythic-history">
