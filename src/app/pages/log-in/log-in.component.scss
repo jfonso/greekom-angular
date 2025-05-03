@@ -24,6 +24,7 @@
 #inputs {
   display: flex;
   flex-direction: column;
+  width: 20rem;
   gap: 2rem;
 }
 
@@ -31,12 +32,12 @@ app-button {
   margin-top: 2rem;
 }
 
-@media (max-device-width: 1200px) {
+@media (max-device-width: 768px) {
   #main-title {
     font-size: 4rem;
   }
   #login-form {
-    width: 40rem;
+    width: 20rem;
     max-height: 40vh;
   }
   #signup-form {
@@ -60,26 +61,21 @@ app-button {
   }
 }
 
-@media (max-device-width: 500px) {
-  #main-title {
-    font-size: 4rem;
-  }
+@media (max-device-width: 425px) {
   #login-form {
-    width: 40rem;
-    max-height: 20vh;
+    width: 80vw;
+    max-height: 40vh;
   }
   #signup-form {
     width: 40rem;
     max-height: 35vh;
   }
+
   .input-label {
     font-size: 2rem;
     margin-top:0.3rem;
   }
-  input {
-    height: 1.5rem;
-    margin-bottom: 1rem;
-  }
+
   #button button {
     font-size: 1.2rem;
     height: 5rem;
