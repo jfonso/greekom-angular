@@ -1,0 +1,9 @@
+<div id="reply-modal" [class]="`modal${show()?' show':''}`">
+    <div class="modal-content">
+        <span class="close" (click)="show.set(false)">&times;</span>
+        <div class="modal-header">{{ title() }}</div>
+        <div>
+            <ng-content />
+        </div>
+    </div>
+</div>

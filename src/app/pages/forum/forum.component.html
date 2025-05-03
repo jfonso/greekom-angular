@@ -6,17 +6,55 @@
     <div id="forum-title">
         <app-button
           label="New Thread"
+          (click)="showModal.set(true)"
           ></app-button>
       <div id="forum-search-container">
-        <input type="text" name="search" placeholder="Username, Title...">
+        <app-input type="text" name="search" placeholder="Username, Title..." [(value)]="filterText" />
       </div>
     </div>
     <ul id="thread-list">
-      <app-thread-item></app-thread-item>
-      <app-thread-item></app-thread-item>
-      <app-thread-item></app-thread-item>
-      <app-thread-item></app-thread-item>
-      <app-thread-item></app-thread-item>
+      @for(thread of filteredThreads(); track thread.id) {
+        <app-thread-item [threadId]="thread.id" [title]="thread.title" [lastUpdated]="thread.updated.toDate().toLocaleString()" [creatorName]="thread.creatorName"></app-thread-item>
+      }
     </ul>
+    <app-modal title="New Thread" [(show)]="showModal">
+      <form [formGroup]="modalForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              @if(modalForm.controls.title.invalid && (modalForm.controls.title.dirty || modalForm.controls.title.touched)) {
+                @if(modalForm.controls.title.hasError('required')) {
+                  <div class="input-error">Field is required</div>
+                }
+                @if(modalForm.controls.title.hasError('minlength')) {
+                  <div class="input-error">Field is minimum length is 6 characters</div>
+                }
+                @if(modalForm.controls.title.hasError('maxlength')) {
+                  <div class="input-error">Field is maximum length is 30 characters</div>
+                }
+                @if(modalForm.controls.title.hasError('pattern')) {
+                  <div class="input-error">Field is must start with a letter</div>
+                }
+              }
+              <app-input type="text" name="title" placeholder="Title" formControlName="title" />
+          </div>
+          <div class="form-group">
+              @if(modalForm.controls.content.invalid && (modalForm.controls.content.dirty || modalForm.controls.content.touched)) {
+                @if(modalForm.controls.content.hasError('required')) {
+                  <div class="input-error">Field is required</div>
+                }
+                @if(modalForm.controls.content.hasError('minlength')) {
+                  <div class="input-error">Field is minimum length is 6 characters</div>
+                }
+                @if(modalForm.controls.content.hasError('maxlength')) {
+                  <div class="input-error">Field is maximum length is 1000 characters</div>
+                }
+              }
+              <app-textarea name="content" rows="10" formControlName="content"></app-textarea>
+          </div>
+          <div class="form-controls">
+              <app-button
+                label="Post"></app-button>
+          </div>
+      </form>
+    </app-modal>
   </section>
 </main>

@@ -1,5 +1,5 @@
 <li class="thread-item" id="thread-ID">
-  <a href="thread.html?id=ID">TITLE - Created by USER - Last updated UPDATED</a>
+  <a [routerLink]="url()">{{ title() }} - Created by {{ creatorName() }} - Last updated {{ lastUpdated() }}</a>
   <button type="button">
     &star;
   </button>

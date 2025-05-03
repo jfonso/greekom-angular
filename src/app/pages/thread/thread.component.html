@@ -1,35 +1,44 @@
-<main>
+<main class="thread">
   <div>
-    <h2 id="main-title">Thread</h2>
     <div id="thread-controls">
       <div>
-        <app-button label="Reply"/>
+        <app-button label="Reply" (click)="showModal.set(true)"/>
       </div>
       <div id="fav-thread">
         <button type="button">&star;</button>
       </div>
     </div>
-
+    <h2 id="main-title">{{thread()?.title}}</h2>
   </div>
-  <section id="opening-post" xlu-include-file="templates/post.html" data-user="" data-content="">
+  <section id="opening-post">
+    <app-post [postId]="thread()?.id||''" [creatorName]="thread()?.creatorName||''" [content]="thread()?.content||''"></app-post>
   </section>
   <hr>
-  <section id="thread-responses" xlu-include-file="templates/post.html" data-json='//:3000/posts?thread_id=&_sort=created'></section>
-  <div id="reply-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div class="modal-header">New Post</div>
-      <form action="/posts" method="POST">
-        <input type="hidden" name="thread_id" value="">
-        <input type="hidden" name="created" class="fill-with-timestamp">
-        <input type="hidden" name="user" value="">
+  <section>
+    @for(post of (thread()?.posts||[]); track post.id) {
+      <app-post [postId]="post.id" [creatorName]="post.creatorName" [content]="post.content"></app-post>
+    }
+  </section>
+  <app-modal title="New Post" [(show)]="showModal">
+    <form [formGroup]="modalForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <textarea name="content" rows="10" minlength="5" maxlength="1000" required></textarea>
+            @if(modalForm.controls.content.invalid && (modalForm.controls.content.dirty || modalForm.controls.content.touched)) {
+              @if(modalForm.controls.content.hasError('required')) {
+                <div class="input-error">Field is required</div>
+              }
+              @if(modalForm.controls.content.hasError('minlength')) {
+                <div class="input-error">Field is minimum length is 6 characters</div>
+              }
+              @if(modalForm.controls.content.hasError('maxlength')) {
+                <div class="input-error">Field is maximum length is 1000 characters</div>
+              }
+            }
+            <app-textarea name="content" rows="10" formControlName="content"></app-textarea>
         </div>
-        <div class="form-group">
-          <app-button label="Post"/>
+        <div class="form-controls">
+            <app-button
+              label="Post"></app-button>
         </div>
-      </form>
-    </div>
-  </div>
+    </form>
+  </app-modal>
 </main>

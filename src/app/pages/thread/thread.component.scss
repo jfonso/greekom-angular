@@ -1,6 +1,6 @@
 .forum, .thread {
   background-color: #6B4C3A;
-  padding: 0 2rem 1rem;
+  padding: 1rem 2rem;
   position: relative;
 }
 
@@ -68,4 +68,9 @@
 #main {
   max-width: 110rem;
   border-radius: 2rem;
+}
+
+.form-controls {
+  display: flex;
+  justify-content: center;
 }

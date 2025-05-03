@@ -3,8 +3,11 @@ import { NavbarLinkComponent } from '../navbar-link/navbar-link.component';
 import { ArticleService } from '../../services/article.service';
 import { ArticleListItem } from '../../interfaces/article-list-item';
 import { NavbarDropdownComponent } from '../navbar-dropdown/navbar-dropdown.component';
-import { User } from '../../interfaces/user';
+import { User } from '@angular/fire/auth';
 import { Link } from '../../interfaces/link';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +17,10 @@ import { Link } from '../../interfaces/link';
 })
 export class NavbarComponent {
 
-  user = input<User|null>(null);
+  userService = inject(UserService);
+
+  user = this.userService.getCurrentUser;
+  route = inject(ActivatedRoute);
 
   articleService = inject(ArticleService);
 

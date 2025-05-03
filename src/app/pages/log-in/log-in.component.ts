@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import {InputComponent} from '../../components/input/input.component';
 import {ButtonComponent} from '../../components/button/button.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -36,8 +36,15 @@ export class LogInComponent {
   })
 
   async onSubmit() {
+    console.log(this.form.controls.password.value);
     if (this.form.invalid) return;
     await this.userService.signInWithEmailAndPassword(this.form.controls.email.value, this.form.controls.password.value);
     this.router.navigate(['/']);
+  }
+
+  constructor() {
+    effect(() => {
+      console.log(this.form.controls.password.value);
+    })
   }
 }

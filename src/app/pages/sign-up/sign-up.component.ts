@@ -51,27 +51,34 @@ export class SignUpComponent {
         validators: [
           Validators.required,
           Validators.minLength(6),
-          Validators.maxLength(18)
+          Validators.maxLength(18),
+          this.validateSamePassword
         ]
       }
     ),
     confirmPassword: new FormControl(
       '',
-      [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(18)
-      ]
+      {
+        nonNullable: true,
+        validators: [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(18),
+          this.validateSamePassword
+        ]
+      }
     )
-  },{validators:[this.validateSamePassword]});
+  });
 
   private validateSamePassword(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
+    if (control.parent === null) return null;
+    const password = control.parent!.get('password');
+    const confirmPassword = control.parent!.get('confirmPassword');
     return password?.value == confirmPassword?.value ? null : { notSame: true };
   }
 
   async onSubmit() {
+    console.log(this.form.controls.username.invalid && (this.form.controls.username.dirty || this.form.controls.username.touched));
     if(this.form.invalid) return;
     await this.userService.createUser({
       username: this.form.controls.username.value,

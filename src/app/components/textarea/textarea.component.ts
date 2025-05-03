@@ -1,32 +1,31 @@
-import {Component, forwardRef, input, Input, model, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { Component, forwardRef, input, model } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-input',
+  selector: 'app-textarea',
   imports: [FormsModule],
-  templateUrl: './input.component.html',
-  styleUrl: './input.component.scss',
+  templateUrl: './textarea.component.html',
+  styleUrl: './textarea.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => InputComponent)
+      useExisting: forwardRef(() => TextareaComponent)
     }
   ]
 })
-export class InputComponent implements ControlValueAccessor {
+export class TextareaComponent implements ControlValueAccessor {
   label = input('');
   name = input('');
   placeholder = input('');
-  type = input('');
-  value = model('');
+  rows = input('1');
+  value = '';
   disabled = model(false);
   private touched = false;
   private _onChance = (_: string) => {};
   private _onTouched = () => {};
   writeValue(obj: string): void {
-    //this.value = obj;
-    this.value.set(obj);
+    this.value = obj;
   }
   registerOnChange(fn: any): void {
     this._onChance = fn;
@@ -44,7 +43,7 @@ export class InputComponent implements ControlValueAccessor {
     }
   }
   valueChange() {
-    this._onChance(this.value());
+    this._onChance(this.value);
     this.markAsTouched();
   }
 }

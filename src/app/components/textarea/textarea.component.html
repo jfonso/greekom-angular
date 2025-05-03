@@ -1,0 +1,6 @@
+<div id="inputs">
+    <label class="input-label">{{ label() }}</label>
+    <div id="input-section">
+      <textarea [name]="name()" [rows]="rows()" [placeholder]="placeholder()" [disabled]="disabled()" [(ngModel)]="value" (change)="valueChange()"></textarea>
+    </div>
+</div>

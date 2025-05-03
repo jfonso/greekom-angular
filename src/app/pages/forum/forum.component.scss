@@ -51,6 +51,10 @@
     cursor: pointer;
   }
 }
+.form-controls {
+  display: flex;
+  justify-content: center;
+}
 
   #main {
     max-width: 95%;

@@ -3,24 +3,66 @@
   <section id="main-signup">
     <form id="signup-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div id="inputs">
+        @if(form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)) {
+          @if(form.controls.username.hasError('required')) {
+            <div class="input-error">Field is required</div>
+          }
+          @if(form.controls.username.hasError('minlength')) {
+            <div class="input-error">Field is minimum length is 6 characters</div>
+          }
+          @if(form.controls.username.hasError('maxlength')) {
+            <div class="input-error">Field is maximum length is 26 characters</div>
+          }
+        }
         <app-input
           label="Username"
           name="username"
           formControlName="username"
           placeholder="Username"
           type="text"></app-input>
+        @if(form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)) {
+          @if(form.controls.email.hasError('required')) {
+            <div class="input-error">Field is required</div>
+          }
+          @if(form.controls.email.hasError('email')) {
+            <div class="input-error">Field is must be an email</div>
+          }
+          @if(form.controls.email.hasError('maxlength')) {
+            <div class="input-error">Field is maximum length is 64 characters</div>
+          }
+        }
         <app-input
           label="Email"
           name="email"
           formControlName="email"
           placeholder="email"
           type="email"></app-input>
+        @if(form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)) {
+          @if(form.controls.password.hasError('required')) {
+            <div class="input-error">Field is required</div>
+          }
+          @if(form.controls.password.hasError('minlength')) {
+            <div class="input-error">Field is minimum length is 6 characters</div>
+          }
+          @if(form.controls.password.hasError('maxlength')) {
+            <div class="input-error">Field is maximum length is 26 characters</div>
+          }
+        }
         <app-input
           label="Password"
           name="password"
           formControlName="password"
           placeholder="Password"
           type="password"></app-input>
+        @if(
+          (form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched))
+          &&
+          (form.controls.confirmPassword.invalid && (form.controls.confirmPassword.dirty || form.controls.confirmPassword.touched))
+        ) {
+          @if(form.controls.password.hasError('notSame') || form.controls.confirmPassword.hasError('notSame')) {
+            <div class="input-error">Confirm Password is not the same as Password</div>
+          }
+        }
         <app-input
           label="Confirm Password"
           name="confirmPassword"

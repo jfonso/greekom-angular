@@ -6,10 +6,11 @@
         <app-navbar-link url="/forum" text="Forum"></app-navbar-link>
     </ul>
     <ul id="authentication">
-        @if (user()===null) {
-            <app-navbar-link url="/login" text="Log in"></app-navbar-link>
-            <app-navbar-link url="/signup" text="Sign up"></app-navbar-link>
+        @if (user()) {
+            <app-navbar-dropdown [text]="user()?.displayName||''" id="user-menu" [links]="[{url:'profile',text:'Profile'},{url:'log-out',text:'Log out'}]"></app-navbar-dropdown>
         } @else {
+            <app-navbar-link url="/log-in" text="Log in"></app-navbar-link>
+            <app-navbar-link url="/sign-up" text="Sign up"></app-navbar-link>
         }
     </ul>
 </div>
