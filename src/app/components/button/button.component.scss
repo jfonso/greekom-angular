@@ -18,3 +18,12 @@ button:hover {
   background-color: #6B4C3A;
   color: #000000;
 }
+
+@media (max-device-width: 425px) {
+  button {
+    padding: 0;
+    font-size: 1rem;
+    width: 9rem;
+    height: 2.5rem;
+  }
+}

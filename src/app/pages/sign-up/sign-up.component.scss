@@ -1,5 +1,6 @@
 main {
   height: 100vh;
+  margin-bottom: 6rem;
 }
 #main-title {
   margin-bottom: 0;
@@ -30,4 +31,12 @@ main {
 
 app-button {
   margin-top: 2rem;
+}
+
+
+@media (max-device-width: 768px) {
+  #main-title {
+    margin-top: 1rem;
+    font-size: 3rem;
+  }
 }

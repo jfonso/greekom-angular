@@ -2,14 +2,13 @@
 <main>
   <h2 id="main-title">Forum</h2>
   <section class="forum">
-
     <div id="forum-title">
         <app-button
           label="New Thread"
           (click)="showModal.set(true)"
           ></app-button>
       <div id="forum-search-container">
-        <app-input type="text" name="search" placeholder="Username, Title..." [(value)]="filterText" />
+        <app-input type="text" name="search" placeholder="Username, Title..." [(value)]="filterText"/>
       </div>
     </div>
     <ul id="thread-list">
