@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {HeaderMobileComponent} from './components/header-mobile/header-mobile.component';
 
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {NgIf} from '@angular/common';
 
 @Component({
@@ -15,14 +14,22 @@ import {NgIf} from '@angular/common';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+
+  router = inject(Router);
+
   title = 'greekom-angular';
 
-  isMobile = false;
+  mbMenuVisible = false;
+  
+  triggerMbMenuToggle() {
+    this.mbMenuVisible = !this.mbMenuVisible;
+  }
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver.observe([Breakpoints.HandsetPortrait])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
+  constructor() {
+    this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        this.mbMenuVisible = false;
+      }
+    });
   }
 }

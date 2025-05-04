@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import {RouterLink} from '@angular/router';
 
 @Component({
@@ -11,4 +11,11 @@ import {RouterLink} from '@angular/router';
 })
 export class HeaderComponent {
 
+  triggerMbMenuToggle = output();
+
+  mbMenuToggle(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.triggerMbMenuToggle.emit()
+  }
 }

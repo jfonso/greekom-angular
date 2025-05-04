@@ -24,6 +24,8 @@ export class NavbarComponent {
 
   articleService = inject(ArticleService);
 
+  mbMenuVisible = input(false);
+
   charactersLinks = this.articleService.getCharacters;
   locationsLinks = this.articleService.getLocations;
   mythsLinks = this.articleService.getMyths;

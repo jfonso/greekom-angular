@@ -1,4 +1,4 @@
-<div id="catalog">
+<div id="catalog" class="{{ mbMenuVisible() ? 'show' : '' }}">
     <ul id="catalog-options">
         <app-navbar-dropdown text="Gods and heroes" id="gods-and-heros" [links]="toLinks(charactersLinks())"></app-navbar-dropdown>
         <app-navbar-dropdown text="Locations" id="locations" [links]="toLinks(locationsLinks())"></app-navbar-dropdown>
