@@ -1,0 +1,12 @@
+{
+  "defaultProject": "greekom-angular",
+  "projects": {
+    "greekom-angular": {
+      "name": "greekom-angular",
+      "type": "angular-standalone",
+      "integrations": {
+        "capacitor": {}
+      }
+    }
+  }
+}
