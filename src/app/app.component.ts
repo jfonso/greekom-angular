@@ -6,11 +6,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import {HeaderMobileComponent} from './components/header-mobile/header-mobile.component';
 
 import {NgIf} from '@angular/common';
-import { IonApp, IonContent, IonFooter, IonHeader } from '@ionic/angular/standalone';
+import { IonApp, IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, HeaderMobileComponent, NgIf, IonContent, IonHeader, IonFooter, IonApp],
+  imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, HeaderMobileComponent, NgIf, IonContent, IonApp],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
