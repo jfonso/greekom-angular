@@ -13,3 +13,7 @@
     --ion-background-color: #F4E9DB;
     --ion-font-family: "Inknut Antiqua", serif;
 }
+
+body {
+    word-wrap: initial;
+}
