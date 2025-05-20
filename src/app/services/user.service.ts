@@ -33,4 +33,18 @@ export class UserService {
   }
 
   getCurrentUser = toSignal(authState(this.auth))
+
+  addThreadToFavorites() {
+  }
+
+  getFavoriteThreads() {
+
+  }
+
+  addArticleToFavorites() {
+  }
+
+  getFavoriteArticles() {
+
+  }
 }
