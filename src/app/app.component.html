@@ -1,8 +1,10 @@
 <ion-app>
-<app-header (triggerMbMenuToggle)="triggerMbMenuToggle()"></app-header>
-<app-navbar [mbMenuVisible]="mbMenuVisible"></app-navbar>
-<ion-content>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
-</ion-content>
+  <ion-header>
+  <app-header (triggerMbMenuToggle)="triggerMbMenuToggle()"></app-header>
+    <app-navbar [mbMenuVisible]="mbMenuVisible"></app-navbar>
+  </ion-header>
+  <ion-content>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </ion-content>
 </ion-app>

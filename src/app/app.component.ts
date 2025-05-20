@@ -3,14 +3,11 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import {HeaderMobileComponent} from './components/header-mobile/header-mobile.component';
-
-import {NgIf} from '@angular/common';
-import { IonApp, IonContent } from '@ionic/angular/standalone';
+import {IonApp, IonContent, IonHeader} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, HeaderMobileComponent, NgIf, IonContent, IonApp],
+  imports: [RouterOutlet, HeaderComponent, NavbarComponent, FooterComponent, IonContent, IonApp, IonHeader],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,7 +18,7 @@ export class AppComponent {
   title = 'greekom-angular';
 
   mbMenuVisible = false;
-  
+
   triggerMbMenuToggle() {
     this.mbMenuVisible = !this.mbMenuVisible;
   }
