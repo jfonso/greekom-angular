@@ -1,9 +1,3 @@
-#main-profile {
-  display: flex;
-  justify-content: flex-start;
-  height: 100vh;
-}
-
 main {
   display: flex;
   justify-content: center;
@@ -29,70 +23,32 @@ main {
   padding: 2rem 0;
 }
 
-#input-background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25rem;
-  height: 4rem;
-  margin: 0 0 1rem 0;
-  border-radius: 0.8rem;
-  background-color: #716d6d;
-}
-
 app-profile-menu {
   position: absolute;
   left: 0;
 }
 
-@media (max-device-width: 1200px) {
+@media (max-device-width: 765px) {
   #menu-option-content {
     height: 65vh;
   }
-  .input-label {
-    font-size: 1.5rem;
-  }
-  #profile-menu {
-    font-size: 10rem;
-  }
-  #profile-option {
-    font-size: 1.8rem;
-    height: 5rem;
-    margin-bottom: 1rem;
-  }
-  #profile-menu {
-    height: 60vh;
-  }
+
 }
 
-@media (max-device-width: 500px) {
-  #menu-option-content {
-    height: 40vh;
-  }
-  .input-label {
-    font-size: 2rem;
-  }
-  input {
-    width: 30rem;
-    height: 3rem;
-    font-size: 2rem;
-  }
-  #input-background {
-    height: 6.5rem;
-    width: 35rem;
-    display: flex;
-    justify-content: center;
+@media (max-device-width: 425px) {
+  main {
+    flex-direction: column;
     align-items: center;
   }
-  #profile-menu {
-    font-size: 10rem;
+
+  #menu-option-content {
+    height: 40rem;
+    min-width: auto;
+    min-height: auto;
+    width: 90%;
   }
-  #profile-option {
-    font-size: 1.8rem;
-    height: 5rem;
-    margin-bottom: 1rem;
-  }
-  #profile-menu {
-    height: 35vh;
+
+  app-profile-menu {
+    position: static;
   }
 }

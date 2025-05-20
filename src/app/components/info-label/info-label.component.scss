@@ -33,3 +33,9 @@ section {
   flex-direction: column;
   width: 30rem;
 }
+
+@media (max-device-width: 425px) {
+  section {
+    width: 25rem;
+  }
+}

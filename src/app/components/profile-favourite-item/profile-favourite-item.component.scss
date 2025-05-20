@@ -59,3 +59,24 @@ img {
   margin: 0 1rem;
   color: #000000;
 }
+
+@media (max-device-width: 425px) {
+  section {
+    width: 22rem;
+    height: 5rem
+  }
+
+  img {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  #item-title {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+  }
+
+  #update-text {
+    font-size: 0.7rem;
+  }
+}

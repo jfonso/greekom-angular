@@ -10,3 +10,13 @@ section {
   flex-direction: column;
   gap: 3rem;
 }
+
+@media  (max-device-width: 425px) {
+  section {
+    width: 5rem;
+  }
+
+  #labels {
+    gap: 1.5rem;
+  }
+}
