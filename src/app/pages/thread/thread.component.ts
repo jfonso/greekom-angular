@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import {ButtonComponent} from '../../components/button/button.component';
 import { ThreadService } from '../../services/thread.service';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { firstValueFrom, map, switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PostComponent } from '../../components/post/post.component';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -48,5 +48,16 @@ export class ThreadComponent {
     });
     this.modalForm.reset();
     this.showModal.set(false);
+  }
+  isFavorite = toSignal(this.threadId$.pipe(switchMap(id => this.threadService.isFavorite(id))));
+  
+  async toggleFavorite() {
+    let currentThread = this.thread();
+    if (!currentThread) return;
+    if (!this.isFavorite()) {
+      this.threadService.addToFavorites(currentThread.id,currentThread.title!);
+    } else {
+      this.threadService.removeFromFavorites(currentThread.id);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {ThreadItemComponent} from '../../components/thread-item/thread-item.component';
 import {ButtonComponent} from '../../components/button/button.component';
 import { ThreadService } from '../../services/thread.service';

@@ -5,7 +5,13 @@
         <app-button label="Reply" (click)="showModal.set(true)"/>
       </div>
       <div id="fav-thread">
-        <button type="button">&star;</button>
+        <button type="button" (click)="toggleFavorite()">
+          @if(isFavorite()) {
+            ★
+          } @else {
+            ☆
+          }
+        </button>
       </div>
     </div>
     <h2 id="main-title">{{thread()?.title}}</h2>

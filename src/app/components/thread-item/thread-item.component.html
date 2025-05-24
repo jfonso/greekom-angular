@@ -1,6 +1,10 @@
 <li class="thread-item" id="thread-ID">
   <a [routerLink]="url()">{{ title() }} - Created by {{ creatorName() }} - Last updated {{ lastUpdated() }}</a>
-  <button type="button">
-    &star;
+  <button type="button" (click)="toggleFavorite()">
+    @if(isFavorite()) {
+      ★
+    } @else {
+      ☆
+    }
   </button>
 </li>

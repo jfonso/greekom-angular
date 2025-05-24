@@ -4,6 +4,7 @@ import { addDoc, collection, collectionData, CollectionReference, collectionSnap
 import { combineLatestWith, from, last, map, merge, Observable, pipe, switchMap } from 'rxjs';
 import { Thread } from '../interfaces/thread';
 import { Post } from '../interfaces/post';
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Post } from '../interfaces/post';
 export class ThreadService {
 
   private firestore = inject(Firestore);
+  private databaseService = inject(DatabaseService);
   private threadsCollection = collection(this.firestore, 'threads');
   private usersCollection = collection(this.firestore, 'users');
 
@@ -34,6 +36,8 @@ export class ThreadService {
       })
     )
   );
+
+  getFavoriteThreads = this.databaseService.getFavoriteThreads;
 
   getThread(id: string) {
     let threadDoc = doc(this.firestore, 'threads', id) as DocumentReference<DocumentData&Thread>;
@@ -77,5 +81,15 @@ export class ThreadService {
     return postRef.id;
   }
 
-  constructor() { }
+  async addToFavorites(id: string, title: string) {
+    return this.databaseService.addFavoriteThread({id,title});
+  }
+
+  async removeFromFavorites(id: string) {
+    return this.databaseService.removeFavoriteThread(id);
+  }
+
+  isFavorite(id: string) {
+    return this.databaseService.isFavoriteThread(id);
+  }
 }

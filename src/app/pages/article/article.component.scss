@@ -6,6 +6,9 @@
   margin-bottom: 2rem;
   gap: 50px;
 }
+#title-and-options > svg {
+  cursor: pointer;
+}
 
 #article-title {
   font-size: 3rem;

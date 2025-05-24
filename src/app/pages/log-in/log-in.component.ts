@@ -36,15 +36,8 @@ export class LogInComponent {
   })
 
   async onSubmit() {
-    console.log(this.form.controls.password.value);
     if (this.form.invalid) return;
     await this.userService.signInWithEmailAndPassword(this.form.controls.email.value, this.form.controls.password.value);
     this.router.navigate(['/']);
-  }
-
-  constructor() {
-    effect(() => {
-      console.log(this.form.controls.password.value);
-    })
   }
 }
