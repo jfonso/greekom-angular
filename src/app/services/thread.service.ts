@@ -39,11 +39,8 @@ export class ThreadService {
   ,{initialValue:[]});
 
   getFavoriteThreads = toSignal(toObservable(this.databaseService.getFavoriteThreads).pipe(
-    combineLatestWith(toObservable(this.getThreads).pipe(map(list => list.reduce((c,v) => {
-      c[v.id] = v.updated;
-      return c;
-    }, {} as { [key:string]: Timestamp })))),
-    map(([favorites,timestamps]) => favorites.map(favorite => ({...favorite,updated:timestamps[favorite.id]})))
+    combineLatestWith(toObservable(this.getThreads)),
+    map(([favorites,list]) => list.filter(item => favorites.findIndex(favorite => favorite.favorite_id === item.id)!==-1).map(item => ({id:item.id,title:item.title,updated:item.updated})))
   ),{initialValue:[]});
 
   getThread(id: string) {
@@ -88,8 +85,8 @@ export class ThreadService {
     return postRef.id;
   }
 
-  async addToFavorites(favoriteData: FavoriteThread) {
-    return this.databaseService.addFavoriteThread(favoriteData);
+  async addToFavorites(id: string) {
+    return this.databaseService.addFavoriteThread(id);
   }
 
   async removeFromFavorites(id: string) {

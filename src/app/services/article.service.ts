@@ -39,21 +39,21 @@ export class ArticleService {
   getFavoritCharacters = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
     combineLatestWith(toObservable(this.getCharacters)),
     map(([favorites,list]) => {
-      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
+      return list.filter(item => favorites.findIndex(favorite => favorite.favorite_id === item.id)!==-1).map(item => ({id:item.id,title:item.name,image_url:item.image_url}));
     })
   ),{initialValue:[]});
 
   getFavoritLocations = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
     combineLatestWith(toObservable(this.getLocations)),
     map(([favorites,list]) => {
-      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
+      return list.filter(item => favorites.findIndex(favorite => favorite.favorite_id === item.id)!==-1).map(item => ({id:item.id,title:item.name,image_url:item.image_url}));
     })
   ),{initialValue:[]});
 
   getFavoritMyhts = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
     combineLatestWith(toObservable(this.getMyths)),
     map(([favorites,list]) => {
-      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
+      return list.filter(item => favorites.findIndex(favorite => favorite.favorite_id === item.id)!==-1).map(item => ({id:item.id,title:item.name,image_url:item.image_url}));
     })
   ),{initialValue:[]});
 
@@ -62,8 +62,8 @@ export class ArticleService {
     return docData(articleDoc) as Observable<Article>;
   }
 
-  async addToFavorites(favoriteData: FavoriteArticle) {
-    return this.databaseService.addFavoriteArticle(favoriteData);
+  async addToFavorites(id: string) {
+    return this.databaseService.addFavoriteArticle(id);
   }
 
   async removeFromFavorites(id: string) {

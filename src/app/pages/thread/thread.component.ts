@@ -59,7 +59,7 @@ export class ThreadComponent {
     let currentThread = this.thread();
     if (!currentThread) return;
     if (!this.isFavorite()) {
-      await this.threadService.addToFavorites({id:currentThread.id,title:currentThread.title!});
+      await this.threadService.addToFavorites(currentThread.id);
       this.toastMessage = 'Favorite successfully added';
     } else {
       await this.threadService.removeFromFavorites(currentThread.id);

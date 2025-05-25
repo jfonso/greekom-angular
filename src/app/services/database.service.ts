@@ -1,11 +1,13 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
 import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
 import {Platform} from '@ionic/angular';
 import { FavoriteArticle } from '../interfaces/favorite-article';
-import { BehaviorSubject, from, map, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, from, map, of, switchMap } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FavoriteThread } from '../interfaces/favorite-thread';
+import { UserService } from './user.service';
+import { Favorite } from '../interfaces/favorite';
 
 
 @Injectable({
@@ -14,6 +16,7 @@ import { FavoriteThread } from '../interfaces/favorite-thread';
 export class DatabaseService {
 
 
+  private userService = inject(UserService);
   private sqlite: SQLiteConnection;
   private db: SQLiteDBConnection | null = null;
   private isWeb: boolean = false;
@@ -22,10 +25,27 @@ export class DatabaseService {
   private readonly STORAGE_DB = 'favoritesDB';
 
   private favoriteArticlesChanged = new BehaviorSubject<void>(undefined);
-  private favoriteArticles = new BehaviorSubject<FavoriteArticle[]>([]);
+  private favoriteArticles = new BehaviorSubject<Favorite[]>([]);
 
   private favoriteThreadsChanged = new BehaviorSubject<void>(undefined);
-  private favoriteThreads = new BehaviorSubject<FavoriteThread[]>([]);
+  private favoriteThreads = new BehaviorSubject<Favorite[]>([]);
+
+  private userObservable = toObservable(this.userService.getCurrentUser);
+
+  private favoriteTypeDic = {
+    article: {
+      storageKey: this.ARTICLES_STORAGE_KEY,
+      table: 'favorite_articles',
+      favoritesChanged: this.favoriteArticlesChanged,
+      favorites: this.favoriteArticles
+    },
+    thread: {
+      storageKey: this.THREADS_STORAGE_KEY,
+      table: 'favorite_threads',
+      favoritesChanged: this.favoriteThreadsChanged,
+      favorites: this.favoriteThreads
+    }
+  };
 
   constructor(private platform: Platform) {
     this.sqlite = new SQLiteConnection(CapacitorSQLite);
@@ -45,15 +65,16 @@ export class DatabaseService {
         this.db = db;
         await db.execute(`
           CREATE TABLE IF NOT EXISTS favorite_threads (
-            id TEXT PRIMARY KEY,
-            title TEXT
+            favorite_id TEXT,
+            user_uid TEXT,
+            PRIMARY KEY (favorite_id, user_uid)
           );
         `);
         await db.execute(`
           CREATE TABLE IF NOT EXISTS favorite_articles (
-            id TEXT PRIMARY KEY,
-            title TEXT,
-            image_url TEXT
+            favorite_id TEXT,
+            user_uid TEXT,
+            PRIMARY KEY (favorite_id, user_uid)
           );
         `);
       } catch (error) {
@@ -64,185 +85,136 @@ export class DatabaseService {
     this.favoriteThreadsChanged.next();
   }
 
-  async addFavoriteArticle(item: FavoriteArticle): Promise<void> {
+  private async addFavorite(type: keyof typeof this.favoriteTypeDic, id: string): Promise<void> {
+    let userUid = this.userService.getCurrentUser()?.uid!;
+    if (!userUid) return;
     if (this.isWeb) {
-      const favorites = this.getFavoriteArticles();
-      const exists = favorites.some(fav => fav.id === item.id);
+      const favorites = await firstValueFrom(this.favoriteTypeDic[type].favorites);
+      const exists = favorites.some(fav => fav.favorite_id === id && fav.user_uid === userUid);
       if (!exists) {
 
         const favoriteItem = {
-          id: item.id,
-          title: item.title,
-          image_url: item.image_url
+          favorite_id: id,
+          user_uid: userUid
         };
 
         favorites.push(favoriteItem);
 
-        localStorage.setItem(this.ARTICLES_STORAGE_KEY, JSON.stringify(favorites));
-        this.favoriteArticlesChanged.next();
+        localStorage.setItem(this.favoriteTypeDic[type].storageKey, JSON.stringify(favorites));
+        this.favoriteTypeDic[type].favoritesChanged.next();
       }
     } else if (this.db) {
       await this.db.run(
-        `INSERT OR REPLACE INTO favorite_articles (id, title, image_url) VALUES (?, ?, ?)`,
-        [item.id, item.title, item.image_url]
+        `INSERT OR REPLACE INTO ${this.favoriteTypeDic[type].table} (favorite_id, user_uid) VALUES (?, ?)`,
+        [id, userUid]
       );
-      this.favoriteArticlesChanged.next();
+      this.favoriteTypeDic[type].favoritesChanged.next();
     }
   }
 
-  async addFavoriteThread(item: FavoriteThread): Promise<void> {
+  async addFavoriteArticle(id: string): Promise<void> {
+    return this.addFavorite('article', id);
+  }
+
+  async addFavoriteThread(id: string): Promise<void> {
+    return this.addFavorite('thread', id);
+  }
+
+
+  private async removeFavorite(type: keyof typeof this.favoriteTypeDic, id: string): Promise<void> {
+    let userUid = this.userService.getCurrentUser()?.uid!;
+    if (!userUid) return;
     if (this.isWeb) {
-      const favorites = this.getFavoriteThreads();
-      const exists = favorites.some(fav => fav.id === item.id);
-      if (!exists) {
-
-        const favoriteItem = {
-          id: item.id,
-          title: item.title
-        };
-
-        favorites.push(favoriteItem);
-
-        localStorage.setItem(this.THREADS_STORAGE_KEY, JSON.stringify(favorites));
-        this.favoriteThreadsChanged.next();
-      }
+      const favorites = await firstValueFrom(this.favoriteTypeDic[type].favorites);
+      const updatedFavorites = favorites.filter(fav => fav.favorite_id !== id && fav.user_uid !== userUid);
+      localStorage.setItem(this.favoriteTypeDic[type].storageKey, JSON.stringify(updatedFavorites));
+      this.favoriteTypeDic[type].favoritesChanged.next();
     } else if (this.db) {
-      await this.db.run(
-        `INSERT OR REPLACE INTO favorite_threads (id, title) VALUES (?, ?)`,
-        [item.id, item.title]
-      );
-      this.favoriteThreadsChanged.next();
+      await this.db.run(`DELETE FROM ${this.favoriteTypeDic[type].table} WHERE favorite_id = ? and user_uid = ?`, [id,userUid]);
+      this.favoriteTypeDic[type].favoritesChanged.next();
     }
   }
-
 
   async removeFavoriteArticle(id: string): Promise<void> {
-    if (this.isWeb) {
-      const favorites = this.getFavoriteArticles();
-      const updatedFavorites = favorites.filter((fav: any) => fav.id !== id);
-      localStorage.setItem(this.ARTICLES_STORAGE_KEY, JSON.stringify(updatedFavorites));
-      this.favoriteArticlesChanged.next();
-    } else if (this.db) {
-      await this.db.run(`DELETE FROM favorite_articles WHERE id = ?`, [id]);
-      this.favoriteArticlesChanged.next();
-    }
+    return this.removeFavorite('article', id);
   }
 
 
   async removeFavoriteThread(id: string): Promise<void> {
-    if (this.isWeb) {
-      const favorites = this.getFavoriteThreads();
-      const updatedFavorites = favorites.filter((fav: any) => fav.id !== id);
-      localStorage.setItem(this.THREADS_STORAGE_KEY, JSON.stringify(updatedFavorites));
-      this.favoriteThreadsChanged.next();
-    } else if (this.db) {
-      await this.db.run(`DELETE FROM favorite_threads WHERE id = ?`, [id]);
-      this.favoriteThreadsChanged.next();
-    }
+    return this.removeFavorite('thread', id);
   }
 
-  getFavoriteArticles = toSignal(this.favoriteArticlesChanged.pipe(
-    switchMap(() => {
-      this.loadFavoriteArticles();
-      return this.favoriteArticles;
-    })
+  getFavoriteArticles = toSignal(this.userObservable.pipe(
+    switchMap(()=>this.favoriteArticlesChanged.pipe(
+      switchMap(() => {
+        this.loadFavoriteArticles();
+        return this.favoriteArticles;
+      })
+    ))
+  ),{initialValue:[]});
+
+  getFavoriteThreads = toSignal(this.userObservable.pipe(
+    switchMap(()=>this.favoriteThreadsChanged.pipe(
+      switchMap(() => {
+        this.loadFavoriteThreads();
+        return this.favoriteThreads;
+      })
+    ))
   ),{initialValue:[]});
 
   private async loadFavoriteArticles() {
-    this.favoriteArticles.next(await this.fetchFavoriteArticles());
+    this.favoriteArticles.next(await this.fetchFavorites('article'));
   }
-
-  private async fetchFavoriteArticles(): Promise<FavoriteArticle[]> {
-    if (this.isWeb) {
-      const stored = localStorage.getItem(this.ARTICLES_STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } else if (this.db) {
-      const res = await this.db.query(`SELECT * FROM favorite_articles`);
-      return res.values ?? [];
-    }
-    return [];
-  }
-
-  getFavoriteThreads = toSignal(this.favoriteThreadsChanged.pipe(
-    switchMap(() => {
-      this.loadFavoriteThreads();
-      return this.favoriteThreads;
-    })
-  ),{initialValue:[]});
 
   private async loadFavoriteThreads() {
-    this.favoriteThreads.next(await this.fetchFavoriteThreads());
+    this.favoriteThreads.next(await this.fetchFavorites('thread'));
   }
 
-  private async fetchFavoriteThreads(): Promise<FavoriteThread[]> {
+  private async fetchFavorites(type: keyof typeof this.favoriteTypeDic): Promise<Favorite[]> {
+    let userUid = this.userService.getCurrentUser()?.uid!;
+    if (!userUid) return [];
     if (this.isWeb) {
-      const stored = localStorage.getItem(this.THREADS_STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
+      const stored = localStorage.getItem(this.favoriteTypeDic[type].storageKey);
+      return ((stored ? JSON.parse(stored) : []) as Favorite[]).filter(fav => fav.user_uid === userUid);
     } else if (this.db) {
-      const res = await this.db.query(`SELECT * FROM favorite_threads`);
+      const res = await this.db.query(`SELECT * FROM ${this.favoriteTypeDic[type].table} where user_uid = ?`,[userUid]);
       return res.values ?? [];
     }
     return [];
+  }
+
+  private isFavorite(type: keyof typeof this.favoriteTypeDic, id: string) {
+    return this.userObservable.pipe(
+      switchMap(user => {
+        if (this.isWeb) return this.favoriteTypeDic[type].favorites.pipe(map(favorites => favorites.findIndex(favorite => favorite.favorite_id === id && favorite.user_uid === user?.uid)!==-1));
+        return this.favoriteTypeDic[type].favoritesChanged.pipe(
+          switchMap(() => {
+            return from(this.checkFavoriteInDB(type, id));
+          })
+        );
+      })
+    );
+  }
+
+  private async checkFavoriteInDB(type: keyof typeof this.favoriteTypeDic, id: string): Promise<boolean> {
+    let userUid = this.userService.getCurrentUser()?.uid!;
+    if (!userUid) return false;
+    if (this.db) {
+      const res =
+        await this.db.query(`SELECT id FROM ${this.favoriteTypeDic[type].table} WHERE favorite_id = ? and user_uid`, [id,userUid]);
+      //return res.values?.length > 0 ?? false;
+      return !!(res.values && res.values.length > 0);
+    }
+
+    return false;
   }
 
   isFavoriteArticle(id: string) {
-    if (this.isWeb) return this.favoriteArticles.pipe(map(favorites => favorites.findIndex(favorite => favorite.id === id)!==-1));
-    return this.favoriteArticlesChanged.pipe(
-      switchMap(() => {
-        return from(this.checkFavoriteArticleInDB(id));
-      })
-    );
-  }
-
-  private async checkFavoriteArticleInDB(id: string): Promise<boolean> {
-    if (this.db) {
-      const res =
-        await this.db.query(`SELECT id FROM favorite_articles WHERE id = ?`, [id]);
-      //return res.values?.length > 0 ?? false;
-      return !!(res.values && res.values.length > 0);
-    }
-
-    return false;
+    return this.isFavorite('article', id);
   }
 
   isFavoriteThread(id: string) {
-    if (this.isWeb) return this.favoriteThreads.pipe(map(favorites => favorites.findIndex(favorite => favorite.id === id)!==-1));
-    return this.favoriteThreadsChanged.pipe(
-      switchMap(() => {
-        return from(this.checkFavoriteThreadInDB(id));
-      })
-    );
-  }
-
-  private async checkFavoriteThreadInDB(id: string): Promise<boolean> {
-    if (this.db) {
-      const res =
-        await this.db.query(`SELECT id FROM favorite_threads WHERE id = ?`, [id]);
-      //return res.values?.length > 0 ?? false;
-      return !!(res.values && res.values.length > 0);
-    }
-
-    return false;
-  }
-
-  async clearFavoriteArticles(): Promise<void> {
-    if (this.isWeb) {
-      localStorage.removeItem(this.ARTICLES_STORAGE_KEY);
-      this.favoriteArticlesChanged.next();
-    } else if (this.db) {
-      await this.db.execute(`DELETE FROM favorite_articles`);
-      this.favoriteArticlesChanged.next();
-    }
-  }
-
-  async clearFavoriteThreads(): Promise<void> {
-    if (this.isWeb) {
-      localStorage.removeItem(this.THREADS_STORAGE_KEY);
-      this.favoriteThreadsChanged.next();
-    } else if (this.db) {
-      await this.db.execute(`DELETE FROM favorite_threads`);
-      this.favoriteThreadsChanged.next();
-    }
+    return this.isFavorite('thread', id);
   }
 
 }
