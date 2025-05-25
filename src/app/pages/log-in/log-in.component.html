@@ -42,4 +42,11 @@
       label="Confirm"></app-button>
     </form>
   </section>
+  <ion-toast
+    color="danger"
+    [isOpen]="isToastOpen"
+    message="Log in failed"
+    [duration]="5000"
+    (didDismiss)="dismissToast()"
+  ></ion-toast>
 </main>

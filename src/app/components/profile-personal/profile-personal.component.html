@@ -34,4 +34,11 @@
     [duration]="5000"
     (didDismiss)="dismissToast()"
   ></ion-toast>
+  <ion-toast
+    color="danger"
+    [isOpen]="isErrorToastOpen"
+    message="Information update failed"
+    [duration]="5000"
+    (didDismiss)="dismissErrorToast()"
+  ></ion-toast>
 </form>

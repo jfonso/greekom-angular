@@ -4,6 +4,7 @@ import {ButtonComponent} from '../../components/button/button.component';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,6 +12,7 @@ import { UserService } from '../../services/user.service';
     InputComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    IonToast
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
@@ -19,6 +21,7 @@ export class SignUpComponent {
 
   router = inject(Router);
   userService = inject(UserService);
+  isToastOpen = false;
 
   form = new FormGroup({
     email: new FormControl(
@@ -82,11 +85,19 @@ export class SignUpComponent {
     this.form.controls.confirmPassword.updateValueAndValidity();
     this.form.updateValueAndValidity();
     if(this.form.invalid) return;
-    await this.userService.createUser({
-      username: this.form.controls.username.value,
-      email: this.form.controls.email.value,
-      password: this.form.controls.password.value
-    });
-    this.router.navigate(['/']);
+    try {
+      await this.userService.createUser({
+        username: this.form.controls.username.value,
+        email: this.form.controls.email.value,
+        password: this.form.controls.password.value
+      });
+      this.router.navigate(['/']);
+    } catch(error) {
+      this.isToastOpen = true;
+    }
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 }

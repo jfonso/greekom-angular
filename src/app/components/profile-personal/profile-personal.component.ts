@@ -20,6 +20,7 @@ export class ProfilePersonalComponent {
   userService = inject(UserService);
   user = this.userService.getCurrentUser;
   isToastOpen = false;
+  isErrorToastOpen = false;
 
   form = new FormGroup({
     email: new FormControl(
@@ -49,12 +50,22 @@ export class ProfilePersonalComponent {
 
   async onSubmit() {
     if(this.form.invalid) return;
-    await this.userService.updateUserPersonalInformation(this.form.controls.username.value,this.form.controls.email.value);
-    this.isToastOpen = true;
+    try {
+      await this.userService.updateUserPersonalInformation(this.form.controls.username.value,this.form.controls.email.value);
+      this.isErrorToastOpen = false;
+      this.isToastOpen = true;
+    } catch(error) {
+      this.isErrorToastOpen = true;
+      this.isToastOpen = false;
+    }
   }
 
   dismissToast() {
     this.isToastOpen = false;
+  }
+
+  dismissErrorToast() {
+    this.isErrorToastOpen = false;
   }
 
   constructor() {

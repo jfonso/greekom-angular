@@ -19,6 +19,7 @@ import { IonToast } from '@ionic/angular/standalone';
 export class ProfileChangePasswordComponent {
   userService = inject(UserService);
   isToastOpen = false;
+  isErrorToastOpen = false;
 
   form = new FormGroup({
     password: new FormControl(
@@ -59,11 +60,22 @@ export class ProfileChangePasswordComponent {
     this.form.controls.confirmPassword.updateValueAndValidity();
     this.form.updateValueAndValidity();
     if(this.form.invalid) return;
-    await this.userService.updateUserPassword(this.form.controls.password.value);
-    this.isToastOpen = true;
+    try {
+      await this.userService.updateUserPassword(this.form.controls.password.value);
+      this.isErrorToastOpen = false;
+      this.isToastOpen = true;
+      this.form.reset();
+    } catch(error) {
+      this.isErrorToastOpen = true;
+      this.isToastOpen = false;
+    }
   }
 
   dismissToast() {
     this.isToastOpen = false;
+  }
+
+  dismissErrorToast() {
+    this.isErrorToastOpen = false;
   }
 }
