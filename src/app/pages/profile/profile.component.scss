@@ -6,7 +6,7 @@ main {
   min-height: 100vh;
 }
 
-#menu-option-content {
+app-profile-information {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,10 +42,7 @@ app-profile-menu {
   }
 
   #menu-option-content {
-    height: 40rem;
-    min-width: auto;
-    min-height: auto;
-    width: 90%;
+    min-height: 40rem;
   }
 
   app-profile-menu {

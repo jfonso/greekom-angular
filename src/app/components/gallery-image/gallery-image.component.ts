@@ -8,4 +8,19 @@ import { Component, input } from '@angular/core';
 })
 export class GalleryImageComponent {
   url = input.required<string>();
+  previewVisible = false;
+
+  showPreview(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.previewVisible) {
+      this.hidePreview();
+      return;
+    }
+    this.previewVisible = true;
+  }
+
+  hidePreview() {
+    this.previewVisible = false;
+  }
 }

@@ -1,5 +1,6 @@
 <li>
-  <a href="{{url()}}" target="_blank" class="gallery-image">
-    <img src="{{url()}}">
+  <a href="#" target="_blank" class="gallery-image" (click)="showPreview($event)">
+    <img src="{{url()}}" draggable="false">
   </a>
+  <img src="{{url()}}" [class]="'preview-image'+(previewVisible?'':' hidden')" (click)="hidePreview()">
 </li>

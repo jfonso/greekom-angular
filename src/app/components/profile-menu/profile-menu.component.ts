@@ -10,10 +10,16 @@ export class ProfileMenuComponent {
 
   activeTab = 'personal';
   activeTabChange = output<string>()
+  showAll = false;
 
 
   switchTab(tab: string) {
     this.activeTab = tab;
     this.activeTabChange.emit(tab);
+    this.showAll = false;
+  }
+
+  toggleShowAll() {
+    this.showAll = !this.showAll;
   }
 }

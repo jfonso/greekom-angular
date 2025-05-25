@@ -1,4 +1,8 @@
 <div class="post" id="post-{{postId()}}">
     <div class="post-username">{{creatorName()}}</div>
-    <div class="post-content">{{content()}}</div>
+    <div class="post-content">
+        @for(line of content().split("\n"); track $index) {
+            {{line}}<br/>
+        }
+    </div>
 </div>

@@ -21,9 +21,20 @@
   align-items: center;
 }
 
-.profile-link:hover, .profile-link.active {
+.profile-link:not(.mobile-only):hover, .profile-link:not(.mobile-only).active {
   background-color: #d0b37b;
   padding: 4px 4px 4px 16px;
   color: #000000;
   font-weight: bold;
+}
+
+@media (min-device-width: 426px) {
+  .mobile-only {
+    display: none;
+  }
+}
+@media (max-device-width: 425px) {
+  .mobile-hidden:not(.active) {
+    display: none;
+  }
 }

@@ -1,8 +1,15 @@
-img {
-    width: 12rem;
+a img {
     height: 8rem;
-    object-fit: fill;
 }
 
-@media (max-device-width: 425px) {
+.preview-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: calc(100% - 2rem);
+    max-height: calc(100% - 20rem);
+}
+.preview-image.hidden {
+    display: none!important;
 }
