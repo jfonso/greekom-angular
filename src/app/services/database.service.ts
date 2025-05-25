@@ -2,10 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {Capacitor} from '@capacitor/core';
 import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
 import {Platform} from '@ionic/angular';
-import { FavoriteArticle } from '../interfaces/favorite-article';
-import { BehaviorSubject, firstValueFrom, from, map, of, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, firstValueFrom, from, map, switchMap } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FavoriteThread } from '../interfaces/favorite-thread';
 import { UserService } from './user.service';
 import { Favorite } from '../interfaces/favorite';
 
@@ -144,22 +142,20 @@ export class DatabaseService {
     return this.removeFavorite('thread', id);
   }
 
-  getFavoriteArticles = toSignal(this.userObservable.pipe(
-    switchMap(()=>this.favoriteArticlesChanged.pipe(
-      switchMap(() => {
-        this.loadFavoriteArticles();
-        return this.favoriteArticles;
-      })
-    ))
+  getFavoriteArticles = toSignal(this.favoriteArticlesChanged.pipe(
+    combineLatestWith(this.userObservable),
+    switchMap(() => {
+      this.loadFavoriteArticles();
+      return this.favoriteArticles;
+    })
   ),{initialValue:[]});
 
-  getFavoriteThreads = toSignal(this.userObservable.pipe(
-    switchMap(()=>this.favoriteThreadsChanged.pipe(
-      switchMap(() => {
-        this.loadFavoriteThreads();
-        return this.favoriteThreads;
-      })
-    ))
+  getFavoriteThreads = toSignal(this.favoriteThreadsChanged.pipe(
+    combineLatestWith(this.userObservable),
+    switchMap(() => {
+      this.loadFavoriteThreads();
+      return this.favoriteThreads;
+    })
   ),{initialValue:[]});
 
   private async loadFavoriteArticles() {
