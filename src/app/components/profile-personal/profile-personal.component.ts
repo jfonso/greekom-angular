@@ -3,6 +3,7 @@ import { InputComponent } from '../input/input.component';
 import { ButtonComponent } from '../button/button.component';
 import { UserService } from '../../services/user.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-profile-personal',
@@ -10,13 +11,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   imports: [
     InputComponent,
     ButtonComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonToast
   ],
   styleUrls: ['./profile-personal.component.scss'],
 })
 export class ProfilePersonalComponent {
   userService = inject(UserService);
   user = this.userService.getCurrentUser;
+  isToastOpen = false;
 
   form = new FormGroup({
     email: new FormControl(
@@ -47,6 +50,11 @@ export class ProfilePersonalComponent {
   async onSubmit() {
     if(this.form.invalid) return;
     await this.userService.updateUserPersonalInformation(this.form.controls.username.value,this.form.controls.email.value);
+    this.isToastOpen = true;
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 
   constructor() {

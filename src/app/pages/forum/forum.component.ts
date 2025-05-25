@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { InputComponent } from '../../components/input/input.component';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { Router } from '@angular/router';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-forum',
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
     ModalComponent,
     InputComponent,
     TextareaComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonToast
   ],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
@@ -30,6 +32,8 @@ export class ForumComponent {
   threads = this.threadService.getThreads
   showModal = signal(false);
   filterText = signal('');
+  toastMessage = '';
+  isToastOpen = false;
   filteredThreads = computed(() => {
     const text = this.filterText().toLocaleLowerCase();
     const items = this.threads();
@@ -63,5 +67,14 @@ export class ForumComponent {
       content: this.modalForm.controls.content.value,
     });
     this.router.navigate([`thread/${threadId}`]);
+  }
+
+  showMessage(message: string) {
+    this.toastMessage = message;
+    this.isToastOpen = true;
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 }

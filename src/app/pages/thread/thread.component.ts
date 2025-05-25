@@ -9,6 +9,7 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { UserService } from '../../services/user.service';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-thread',
@@ -17,7 +18,8 @@ import { UserService } from '../../services/user.service';
     PostComponent,
     ModalComponent,
     TextareaComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonToast
   ],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
@@ -29,7 +31,9 @@ export class ThreadComponent {
   user = this.userService.getCurrentUser;
   threadId$ = this.route.params.pipe(map(params => params['id']));
   thread = toSignal(this.threadId$.pipe(switchMap(id => this.threadService.getThread(id))));
-  showModal = signal(false)
+  showModal = signal(false);
+  toastMessage = '';
+  isToastOpen = false;
   modalForm = new FormGroup({
     content: new FormControl('', {
       nonNullable: true,
@@ -55,9 +59,16 @@ export class ThreadComponent {
     let currentThread = this.thread();
     if (!currentThread) return;
     if (!this.isFavorite()) {
-      this.threadService.addToFavorites({id:currentThread.id,title:currentThread.title!});
+      await this.threadService.addToFavorites({id:currentThread.id,title:currentThread.title!});
+      this.toastMessage = 'Favorite successfully added';
     } else {
-      this.threadService.removeFromFavorites(currentThread.id);
+      await this.threadService.removeFromFavorites(currentThread.id);
+      this.toastMessage = 'Favorite successfully removed';
     }
+    this.isToastOpen = true;
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 }

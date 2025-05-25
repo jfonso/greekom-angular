@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, output } from '@angular/core';
 import { Thread } from '../../interfaces/thread';
 import { RouterLink } from '@angular/router';
 import { ThreadService } from '../../services/thread.service';
@@ -19,13 +19,16 @@ export class ThreadItemComponent {
   url = computed(() => `/thread/${this.threadId()}`);
   creatorName = input.required<string>();
   isFavorite = toSignal(toObservable(this.threadId).pipe(switchMap(id => this.threadService.isFavorite(id))));
+  onShowMessage = output<string>();
   
   async toggleFavorite() {
     let id = this.threadId();
     if (!this.isFavorite()) {
-      this.threadService.addToFavorites({id,title:this.title()});
+      await this.threadService.addToFavorites({id,title:this.title()});
+      this.onShowMessage.emit('Favorite successfully added');
     } else {
-      this.threadService.removeFromFavorites(id);
+      await this.threadService.removeFromFavorites(id);
+      this.onShowMessage.emit('Favorite successfully removed');
     }
   }
 }

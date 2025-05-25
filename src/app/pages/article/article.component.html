@@ -63,4 +63,10 @@
       } @empty {}
     </ul>
   </section>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    [duration]="5000"
+    (didDismiss)="dismissToast()"
+  ></ion-toast>
 </main>

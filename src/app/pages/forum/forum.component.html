@@ -13,7 +13,7 @@
     </div>
     <ul id="thread-list">
       @for(thread of filteredThreads(); track thread.id) {
-        <app-thread-item [threadId]="thread.id" [title]="thread.title" [lastUpdated]="thread.updated.toDate().toLocaleString()" [creatorName]="thread.creatorName"></app-thread-item>
+        <app-thread-item [threadId]="thread.id" [title]="thread.title" [lastUpdated]="thread.updated.toDate().toLocaleString()" [creatorName]="thread.creatorName" (onShowMessage)="showMessage($event)"></app-thread-item>
       }
     </ul>
     <app-modal title="New Thread" [(show)]="showModal">
@@ -56,4 +56,10 @@
       </form>
     </app-modal>
   </section>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    [duration]="5000"
+    (didDismiss)="dismissToast()"
+  ></ion-toast>
 </main>

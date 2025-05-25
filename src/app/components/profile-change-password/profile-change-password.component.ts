@@ -3,19 +3,22 @@ import {InputComponent} from '../input/input.component';
 import {ButtonComponent} from '../button/button.component';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-profile-change-password',
   imports: [
     InputComponent,
     ButtonComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonToast
   ],
   templateUrl: './profile-change-password.component.html',
   styleUrl: './profile-change-password.component.scss'
 })
 export class ProfileChangePasswordComponent {
   userService = inject(UserService);
+  isToastOpen = false;
 
   form = new FormGroup({
     password: new FormControl(
@@ -52,7 +55,15 @@ export class ProfileChangePasswordComponent {
   }
 
   async onSubmit() {
+    this.form.controls.password.updateValueAndValidity();
+    this.form.controls.confirmPassword.updateValueAndValidity();
+    this.form.updateValueAndValidity();
     if(this.form.invalid) return;
     await this.userService.updateUserPassword(this.form.controls.password.value);
+    this.isToastOpen = true;
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 }

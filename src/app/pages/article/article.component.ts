@@ -7,6 +7,7 @@ import { InfoboxSectionComponent } from '../../components/infobox-section/infobo
 import { firstValueFrom, map, switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DatabaseService } from '../../services/database.service';
+import { IonToast } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-article',
@@ -14,7 +15,8 @@ import { DatabaseService } from '../../services/database.service';
     GalleryImageComponent,
     IlustratedLinkComponent,
     InfoboxSectionComponent,
-    RouterLink
+    RouterLink,
+    IonToast
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
@@ -26,14 +28,23 @@ export class ArticleComponent {
   articleId$ = this.route.params.pipe(map(params => params['id']));
   article = toSignal(this.articleId$.pipe(switchMap(id => this.articleService.getArticle(id))));
   isFavorite = toSignal(this.articleId$.pipe(switchMap(id => this.articleService.isFavorite(id))));
+  toastMessage = '';
+  isToastOpen = false;
 
   async toggleFavorite() {
     let id = await firstValueFrom(this.articleId$);
     let article = this.article()!;
     if (!this.isFavorite()) {
       this.articleService.addToFavorites({id,title:article.title,image_url:article.articleImage});
+      this.toastMessage = 'Favorite successfully added';
     } else {
-      this.articleService.removeFromFavorites(id);
+      await this.articleService.removeFromFavorites(id);
+      this.toastMessage = 'Favorite successfully removed';
     }
+    this.isToastOpen = true;
+  }
+
+  dismissToast() {
+    this.isToastOpen = false;
   }
 }

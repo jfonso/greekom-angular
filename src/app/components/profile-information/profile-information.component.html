@@ -14,4 +14,10 @@
       <app-profile-favorite [favorites]="favoriteThreads()" (onRemove)="removeFavoriteThread($event)" (onNavigate)="navigateToFavoriteThread($event)"/>
     }
   </div>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="Favorite successfully removed"
+    [duration]="5000"
+    (didDismiss)="dismissToast()"
+  ></ion-toast>
 </section>

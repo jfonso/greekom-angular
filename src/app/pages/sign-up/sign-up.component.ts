@@ -78,12 +78,15 @@ export class SignUpComponent {
   }
 
   async onSubmit() {
+    this.form.controls.password.updateValueAndValidity();
+    this.form.controls.confirmPassword.updateValueAndValidity();
+    this.form.updateValueAndValidity();
     if(this.form.invalid) return;
     await this.userService.createUser({
       username: this.form.controls.username.value,
       email: this.form.controls.email.value,
       password: this.form.controls.password.value
     });
-    this.router.navigate(['log-in']);
+    this.router.navigate(['/']);
   }
 }

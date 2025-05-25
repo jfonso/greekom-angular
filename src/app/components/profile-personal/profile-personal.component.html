@@ -28,4 +28,10 @@
       </div>
       <app-button label="Confirm"/>
   </section>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="Information successfully updated"
+    [duration]="5000"
+    (didDismiss)="dismissToast()"
+  ></ion-toast>
 </form>
