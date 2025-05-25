@@ -18,5 +18,8 @@ import {ProfileFavouriteItemComponent} from '../../components/profile-favourite-
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
-
+  activeTab = 'personal';
+  activeTabChange(tab: string) {
+    this.activeTab = tab;
+  }
 }

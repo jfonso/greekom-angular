@@ -1,6 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GalleryImageComponent } from '../../components/gallery-image/gallery-image.component';
 import { IlustratedLinkComponent } from '../../components/ilustrated-link/ilustrated-link.component';
 import { InfoboxSectionComponent } from '../../components/infobox-section/infobox-section.component';
@@ -14,6 +14,7 @@ import { DatabaseService } from '../../services/database.service';
     GalleryImageComponent,
     IlustratedLinkComponent,
     InfoboxSectionComponent,
+    RouterLink
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss'
@@ -28,8 +29,9 @@ export class ArticleComponent {
 
   async toggleFavorite() {
     let id = await firstValueFrom(this.articleId$);
+    let article = this.article()!;
     if (!this.isFavorite()) {
-      this.articleService.addToFavorites(id);
+      this.articleService.addToFavorites({id,title:article.title,image_url:article.articleImage});
     } else {
       this.articleService.removeFromFavorites(id);
     }

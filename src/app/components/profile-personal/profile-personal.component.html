@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <section>
+      <div id="inputs">
+        @if(form.controls.username.invalid && (form.controls.username.dirty || form.controls.username.touched)) {
+          @if(form.controls.username.hasError('required')) {
+            <div class="input-error">Field is required</div>
+          }
+          @if(form.controls.username.hasError('minlength')) {
+            <div class="input-error">Field is minimum length is 6 characters</div>
+          }
+          @if(form.controls.username.hasError('maxlength')) {
+            <div class="input-error">Field is maximum length is 26 characters</div>
+          }
+        }
+        <app-input label="Username" name="username" formControlName="username" type="text"/>
+        @if(form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)) {
+          @if(form.controls.email.hasError('required')) {
+            <div class="input-error">Field is required</div>
+          }
+          @if(form.controls.email.hasError('email')) {
+            <div class="input-error">Field is must be an email</div>
+          }
+          @if(form.controls.email.hasError('maxlength')) {
+            <div class="input-error">Field is maximum length is 64 characters</div>
+          }
+        }
+        <app-input label="Email" name="email" formControlName="email" type="email"/>
+      </div>
+      <app-button label="Confirm"/>
+  </section>
+</form>

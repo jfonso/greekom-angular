@@ -1,0 +1,7 @@
+<div>
+  @for(favorite of favorites(); track favorite.id) {
+    <app-profile-favourite-item [favorite]="favorite" (onRemove)="removeFavorite($event)" (onNavigate)="navigateToFavorite($event)"/>
+  } @empty {
+    There are no favorites in this list yet.
+  }
+</div>

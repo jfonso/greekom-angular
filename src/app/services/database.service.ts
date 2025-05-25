@@ -53,7 +53,6 @@ export class DatabaseService {
           CREATE TABLE IF NOT EXISTS favorite_articles (
             id TEXT PRIMARY KEY,
             title TEXT,
-            type TEXT,
             image_url TEXT
           );
         `);
@@ -74,7 +73,6 @@ export class DatabaseService {
         const favoriteItem = {
           id: item.id,
           title: item.title,
-          type: item.type,
           image_url: item.image_url
         };
 
@@ -85,8 +83,8 @@ export class DatabaseService {
       }
     } else if (this.db) {
       await this.db.run(
-        `INSERT OR REPLACE INTO favorite_articles (id, title, type, image_url) VALUES (?, ?, ?, ?)`,
-        [item.id, item.title, item.type, item.image_url]
+        `INSERT OR REPLACE INTO favorite_articles (id, title, image_url) VALUES (?, ?, ?)`,
+        [item.id, item.title, item.image_url]
       );
       this.favoriteArticlesChanged.next();
     }

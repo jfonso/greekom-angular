@@ -23,7 +23,7 @@ export class ThreadItemComponent {
   async toggleFavorite() {
     let id = this.threadId();
     if (!this.isFavorite()) {
-      this.threadService.addToFavorites(id,this.title());
+      this.threadService.addToFavorites({id,title:this.title()});
     } else {
       this.threadService.removeFromFavorites(id);
     }

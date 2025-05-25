@@ -13,11 +13,13 @@ a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding-right: 1rem;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 a:hover {
   background-color: #595757;
-  cursor: pointer;
 }
 
 img {
@@ -32,7 +34,8 @@ img {
 #item-title {
   color: #ffffff;
   margin: 0 1rem;
-  font-size: 3rem;
+  font-size: 2rem;
+  flex: 1;
 }
 
 #remove-button {

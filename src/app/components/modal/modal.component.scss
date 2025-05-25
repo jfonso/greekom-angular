@@ -40,7 +40,7 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 .modal.show {
-    display: block;
+    display: flex;
 }
   
 /* Modal Content */
@@ -50,6 +50,7 @@
     padding: 1.25rem;
     border: 1px solid #888;
     max-width: 36rem;
+    flex: 1;
 }
   
 /* The Close Button */

@@ -20,7 +20,7 @@ export const routes: Routes = [
   {path: 'forum', component: ForumComponent, canActivate: [AuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }},
   {path: 'thread/:id', component: ThreadComponent},
   {path: 'thread', component: ThreadComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }},
   {path: 'log-out', redirectTo: () => {
     const userService = inject(UserService);
     userService.logOut();

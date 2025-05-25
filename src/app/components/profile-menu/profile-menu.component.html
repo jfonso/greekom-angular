@@ -1,10 +1,10 @@
 <section>
   <aside id="profile-menu">
-    <div class="profile-link">Personal Information</div>
-    <div class="profile-link">Change Password</div>
-    <div class="profile-link">Favorite Characters</div>
-    <div class="profile-link">Favorite Places</div>
-    <div class="profile-link">Favorite Myths</div>
-    <div class="profile-link">Favorite Threads</div>
+    <div [class]="'profile-link'+('personal'===activeTab?' active':'')" (click)="switchTab('personal')">Personal Information</div>
+    <div [class]="'profile-link'+('password'===activeTab?' active':'')" (click)="switchTab('password')">Change Password</div>
+    <div [class]="'profile-link'+('characters'===activeTab?' active':'')" (click)="switchTab('characters')" class="profile-link">Favorite Characters</div>
+    <div [class]="'profile-link'+('locations'===activeTab?' active':'')" (click)="switchTab('locations')" class="profile-link">Favorite Places</div>
+    <div [class]="'profile-link'+('myths'===activeTab?' active':'')" (click)="switchTab('myths')" class="profile-link">Favorite Myths</div>
+    <div [class]="'profile-link'+('threads'===activeTab?' active':'')" (click)="switchTab('threads')" class="profile-link">Favorite Threads</div>
   </aside>
 </section>

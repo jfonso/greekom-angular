@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-profile-menu',
@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class ProfileMenuComponent {
 
+  activeTab = 'personal';
+  activeTabChange = output<string>()
+
+
+  switchTab(tab: string) {
+    this.activeTab = tab;
+    this.activeTabChange.emit(tab);
+  }
 }

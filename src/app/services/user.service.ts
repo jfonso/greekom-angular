@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Auth, authState, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, User } from '@angular/fire/auth';
+import { Auth, authState, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile, User } from '@angular/fire/auth';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 
@@ -25,6 +25,23 @@ export class UserService {
   }
   async signInWithEmailAndPassword(email: string, password: string) {
     await signInWithEmailAndPassword(this.auth, email, password);
+    return true;
+  }
+
+  async updateUserPersonalInformation(username: string, email: string) {
+    let user = this.getCurrentUser()!;
+    let userDoc = doc(this.firestore, '/users', user.uid);
+    await Promise.all([
+      updateProfile(user, {displayName: username}),
+      updateEmail(user, email),
+      setDoc(userDoc, {username})
+    ]);
+    return true;
+  }
+
+  async updateUserPassword(password: string) {
+    let user = this.getCurrentUser()!;
+    await updatePassword(user, password);
     return true;
   }
 

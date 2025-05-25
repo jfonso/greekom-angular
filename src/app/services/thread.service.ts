@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { addDoc, collection, collectionData, CollectionReference, collectionSnapshots, doc, docData, DocumentData, DocumentReference, Firestore, getDocs, query, serverTimestamp, updateDoc, where } from '@angular/fire/firestore';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { addDoc, collection, collectionData, CollectionReference, collectionSnapshots, doc, docData, DocumentData, DocumentReference, Firestore, getDocs, query, serverTimestamp, Timestamp, updateDoc, where } from '@angular/fire/firestore';
 import { combineLatestWith, from, last, map, merge, Observable, pipe, switchMap } from 'rxjs';
 import { Thread } from '../interfaces/thread';
 import { Post } from '../interfaces/post';
 import { DatabaseService } from './database.service';
+import { FavoriteThread } from '../interfaces/favorite-thread';
 
 @Injectable({
   providedIn: 'root'
@@ -35,9 +36,15 @@ export class ThreadService {
         );
       })
     )
-  );
+  ,{initialValue:[]});
 
-  getFavoriteThreads = this.databaseService.getFavoriteThreads;
+  getFavoriteThreads = toSignal(toObservable(this.databaseService.getFavoriteThreads).pipe(
+    combineLatestWith(toObservable(this.getThreads).pipe(map(list => list.reduce((c,v) => {
+      c[v.id] = v.updated;
+      return c;
+    }, {} as { [key:string]: Timestamp })))),
+    map(([favorites,timestamps]) => favorites.map(favorite => ({...favorite,updated:timestamps[favorite.id]})))
+  ),{initialValue:[]});
 
   getThread(id: string) {
     let threadDoc = doc(this.firestore, 'threads', id) as DocumentReference<DocumentData&Thread>;
@@ -81,8 +88,8 @@ export class ThreadService {
     return postRef.id;
   }
 
-  async addToFavorites(id: string, title: string) {
-    return this.databaseService.addFavoriteThread({id,title});
+  async addToFavorites(favoriteData: FavoriteThread) {
+    return this.databaseService.addFavoriteThread(favoriteData);
   }
 
   async removeFromFavorites(id: string) {

@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-.profile-link:hover {
+.profile-link:hover, .profile-link.active {
   background-color: #d0b37b;
   padding: 4px 4px 4px 16px;
   color: #000000;

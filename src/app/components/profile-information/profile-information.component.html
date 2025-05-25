@@ -1,14 +1,17 @@
 <section>
   <div id="labels">
-    <!--
-    <app-info-label label="Username"/>
-    <app-info-label label="Email"/>
-    -->
-
-    <!--
-    <app-profile-favourite-item/>
-    -->
-
-    <app-profile-change-password/>
+    @if(activeTab()==='personal') {
+      <app-profile-personal/>
+    } @else if(activeTab()==='password') {
+      <app-profile-change-password/>
+    } @else if(activeTab()==='characters') {
+      <app-profile-favorite [favorites]="favoriteCharacters()" (onRemove)="removeFavoriteArticle($event)" (onNavigate)="navigateToFavoriteArticle($event)"/>
+    } @else if(activeTab()==='locations') {
+      <app-profile-favorite [favorites]="favoriteLocations()" (onRemove)="removeFavoriteArticle($event)" (onNavigate)="navigateToFavoriteArticle($event)"/>
+    } @else if(activeTab()==='myths') {
+      <app-profile-favorite [favorites]="favoriteMyths()" (onRemove)="removeFavoriteArticle($event)" (onNavigate)="navigateToFavoriteArticle($event)"/>
+    } @else if(activeTab()==='threads') {
+      <app-profile-favorite [favorites]="favoriteThreads()" (onRemove)="removeFavoriteThread($event)" (onNavigate)="navigateToFavoriteThread($event)"/>
+    }
   </div>
 </section>

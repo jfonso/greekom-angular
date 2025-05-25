@@ -1,11 +1,15 @@
 <section>
-  <a>
-    <figure><img src="" alt=""></figure>
-    <p id="item-title">Title</p>
-    <div id="update-text">
-      <p>LAST UPDATE</p>
-      <p>2025/02/11 20:00</p>
-    </div>
+  <a href="#" class="item" (click)="onClick($event)">
+    @if(favorite().image_url) {
+      <figure><img [src]="favorite().image_url" alt=""></figure>
+    }
+    <p id="item-title">{{favorite().title}}</p>
+    @if(favorite().updated) {
+      <div id="update-text">
+        <p>LAST UPDATE</p>
+        <p>{{favorite().updated!.toDate().toLocaleString()}}</p>
+      </div>
+    }
     <button id="remove-button">Remove</button>
   </a>
 </section>

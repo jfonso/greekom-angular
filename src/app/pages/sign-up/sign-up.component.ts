@@ -78,7 +78,6 @@ export class SignUpComponent {
   }
 
   async onSubmit() {
-    console.log(this.form.controls.username.invalid && (this.form.controls.username.dirty || this.form.controls.username.touched));
     if(this.form.invalid) return;
     await this.userService.createUser({
       username: this.form.controls.username.value,

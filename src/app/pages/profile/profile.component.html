@@ -1,8 +1,8 @@
 <main>
-    <app-profile-menu/>
+    <app-profile-menu (activeTabChange)="activeTabChange($event)"/>
 
   <section id="menu-option-content">
-    <app-profile-information/>
+    <app-profile-information [activeTab]="activeTab"/>
 
   </section>
 </main>

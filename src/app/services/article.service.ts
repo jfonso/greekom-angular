@@ -2,9 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { ArticleListItem } from '../interfaces/article-list-item';
 import { Article } from '../interfaces/article';
 import { Firestore, collection, collectionData, doc, docData } from '@angular/fire/firestore';
-import { map, Observable } from 'rxjs';
+import { combineLatestWith, firstValueFrom, map, Observable } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { DatabaseService } from './database.service';
+import { FavoriteArticle } from '../interfaces/favorite-article';
 
 @Injectable({
   providedIn: 'root'
@@ -36,20 +37,23 @@ export class ArticleService {
   getMyths = toSignal(collectionData(this.navbarMythsCollection) as Observable<ArticleListItem[]>,{initialValue:[]});
 
   getFavoritCharacters = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
-    map(favorites => {
-      return favorites.filter(favorite => this.getCharacters().findIndex(character => character.id === favorite.id)!==-1);
+    combineLatestWith(toObservable(this.getCharacters)),
+    map(([favorites,list]) => {
+      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
     })
   ),{initialValue:[]});
 
   getFavoritLocations = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
-    map(favorites => {
-      return favorites.filter(favorite => this.getLocations().findIndex(character => character.id === favorite.id)!==-1);
+    combineLatestWith(toObservable(this.getLocations)),
+    map(([favorites,list]) => {
+      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
     })
   ),{initialValue:[]});
 
   getFavoritMyhts = toSignal(toObservable(this.databaseService.getFavoriteArticles).pipe(
-    map(favorites => {
-      return favorites.filter(favorite => this.getMyths().findIndex(character => character.id === favorite.id)!==-1);
+    combineLatestWith(toObservable(this.getMyths)),
+    map(([favorites,list]) => {
+      return favorites.filter(favorite => list.findIndex(character => character.id === favorite.id)!==-1);
     })
   ),{initialValue:[]});
 
@@ -58,26 +62,8 @@ export class ArticleService {
     return docData(articleDoc) as Observable<Article>;
   }
 
-  async addToFavorites(id: string) {
-    let articleLists = {
-      character: this.getCharacters,
-      locations: this.getLocations,
-      myths: this.getMyths
-    };
-    let favoriteArticle = null;
-    for (const type in articleLists) {
-      const item = articleLists[type as keyof typeof articleLists]().find(item => item.id === id);
-      if (!item) continue;
-      favoriteArticle = {
-        id: item.id,
-        title: item.name,
-        type,
-        image_url: item.image_url
-      };
-      break;
-    }
-    if (!favoriteArticle) return;
-    return this.databaseService.addFavoriteArticle(favoriteArticle);
+  async addToFavorites(favoriteData: FavoriteArticle) {
+    return this.databaseService.addFavoriteArticle(favoriteData);
   }
 
   async removeFromFavorites(id: string) {
