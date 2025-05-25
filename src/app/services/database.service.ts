@@ -197,7 +197,7 @@ export class DatabaseService {
     if (!userUid) return false;
     if (this.db) {
       const res =
-        await this.db.query(`SELECT id FROM ${this.favoriteTypeDic[type].table} WHERE favorite_id = ? and user_uid`, [id,userUid]);
+        await this.db.query(`SELECT favorite_id FROM ${this.favoriteTypeDic[type].table} WHERE favorite_id = ? and user_uid = ?`, [id,userUid]);
       //return res.values?.length > 0 ?? false;
       return !!(res.values && res.values.length > 0);
     }
